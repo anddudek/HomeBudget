@@ -28,7 +28,7 @@
                 <TextBlock Grid.Column="1"
                            VerticalAlignment="Center"
                            FontSize="16"
-                           Text="{Binding Label}" />
+                           Text="{Binding Label}" /> 
             </Grid>
         </DataTemplate>
 
