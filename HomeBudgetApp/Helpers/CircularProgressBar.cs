@@ -35,7 +35,7 @@ namespace CircularProgressBar
             CircularProgressBar bar = sender as CircularProgressBar;
             double currentAngle = bar.Angle;
             double targetAngle = e.NewValue / bar.Maximum * 359.999;
-            double duration = Math.Abs(currentAngle - targetAngle) / 359.999 * 500;
+            double duration = Math.Abs(currentAngle - targetAngle) / 359.999 * 3000;
             DoubleAnimation anim = new DoubleAnimation(currentAngle, targetAngle, TimeSpan.FromMilliseconds(duration > 0 ? duration : 10));
             bar.BeginAnimation(CircularProgressBar.AngleProperty, anim, HandoffBehavior.Compose);
         }

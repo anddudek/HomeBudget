@@ -62,7 +62,7 @@
         ItemTemplate="{StaticResource HamburgerMenuImageItem}"
         OptionsItemClick="HamburgerMenu_OnItemClick"
         OptionsItemTemplate="{StaticResource HamburgerMenuItem}"
-        SelectedIndex="1"
+        SelectedIndex="0"
         VerticalScrollBarOnLeftSide="False"                                
         DisplayMode="CompactInline">
 
@@ -71,7 +71,7 @@
             <Controls:HamburgerMenuItemCollection>
                 <Controls:HamburgerMenuGlyphItem Glyph="percent" Label="Big four summer heat" >
                     <Controls:HamburgerMenuGlyphItem.Tag>
-                        <views:UserControl1 />
+                        <views:SummaryView  />
                     </Controls:HamburgerMenuGlyphItem.Tag>
                 </Controls:HamburgerMenuGlyphItem>
                 <Controls:HamburgerMenuGlyphItem Glyph="flag" Label="Bison badlands Chillin" >
@@ -81,7 +81,7 @@
                 </Controls:HamburgerMenuGlyphItem>
                 <Controls:HamburgerMenuGlyphItem Glyph="commenting" Label="Giant slab in Oregon" >
                     <Controls:HamburgerMenuGlyphItem.Tag>
-                        <views:UserControl1 />
+                        <views:SummaryView />
                     </Controls:HamburgerMenuGlyphItem.Tag>
                 </Controls:HamburgerMenuGlyphItem>
                 <Controls:HamburgerMenuGlyphItem Glyph="areaChart" Label="Lake Ann Mushroom" >

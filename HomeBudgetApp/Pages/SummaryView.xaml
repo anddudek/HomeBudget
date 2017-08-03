@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="HomeBudgetApp.Pages.SummaryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cpb="clr-namespace:CircularProgressBar"
+             mc:Ignorable="d" 
+             x:Name="SummaryControl"
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Helpers/styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <cpb:CircularProgressBar Grid.Row="0" Grid.ColumnSpan="2" StrokeThickness="15" Radius="100"
+                                 Value="{Binding Path=PercentageValue, ElementName=SummaryControl}" 
+                                 Text="{Binding ProgressText,Mode=OneWay}"
+                                 Style="{StaticResource CircularProgressBarStyle}" FontSize="48"/>
+        <TextBlock Text="Pozostały limit:" Grid.Row="1"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" />
+        <TextBlock Text="{Binding DailyLimitLeft}" Grid.Row="1"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" />
+        <TextBlock Text="Dzisiejsze wydatki:" Grid.Row="2"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" />
+        <ListView ItemsSource="{Binding TodaysPayments}" Grid.Row="3" Grid.ColumnSpan="2" Background="Transparent">
+            <DataTemplate>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{Binding Name}" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                    <TextBlock Grid.Column="1" Text="{Binding Amount}" HorizontalAlignment="Right" Margin="0,10,0,0"/>
+                </Grid>
+            </DataTemplate>
+        </ListView>
+        <TextBlock Text="Suma:" Grid.Row="4"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" />
+        <TextBlock Text="{Binding TodayPaymentSum}" Grid.Row="4"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" />
+        <TextBlock Text="Pozostało:" Grid.Row="5"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" />
+        <TextBlock Text="{Binding TodayPaymentLeft}" Grid.Row="5"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" />
+        <TextBlock Text="Dodatkowa pula miesięczna:" Grid.Row="6"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" />
+        <TextBlock Text="{Binding MonthsPollLeft}" Grid.Row="6"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" />
+    </Grid>
+    
+</UserControl>

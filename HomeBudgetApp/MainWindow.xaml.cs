@@ -14,13 +14,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using HomeBudgetApp.Helpers;
+using System.ComponentModel;
 
 namespace HomeBudgetApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : INotifyPropertyChanged
     {
         public MainWindow()
         {
@@ -48,6 +49,16 @@ namespace HomeBudgetApp
         }
 
         public ICommand Lol { get { return new RelayCommand(Use, CanUse); } }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
     }
 
     public class BindingProxy : Freezable
