@@ -4,16 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HomeBudgetApp"
-        mc:Ignorable="d"
+        xmlns:converters="http://metro.mahapps.com/winfx/xaml/shared"
+        xmlns:views="clr-namespace:HomeBudgetApp.Pages"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"                       
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="Home Budget" Height="350" Width="525" ShowIconOnTitleBar="True" Icon="/HomeBudgetApp;component/Resources/dollar.ico" >
+        Title="Home Budget" Height="700" Width="525" ShowIconOnTitleBar="True" Icon="/HomeBudgetApp;component/Resources/dollar.ico" >
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <TextBlock Margin="4 0 0 0"
-                   VerticalAlignment="Center"
-                   Text="{Binding CurrentUserMessage}" />            
+                VerticalAlignment="Center"
+                Text="{Binding CurrentUserMessage}" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
+
     <Controls:MetroWindow.Resources>
         <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type Controls:HamburgerMenuItem}">
             <Grid Height="48">
@@ -28,21 +32,21 @@
                 <TextBlock Grid.Column="1"
                            VerticalAlignment="Center"
                            FontSize="16"
-                           Text="{Binding Label}" /> 
+                           Text="{Binding Label}" />
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="HamburgerMenuImageItem" DataType="{x:Type Controls:HamburgerMenuGlyphItem}">
             <Grid Height="48">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition Width="50" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Image Margin="12"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Source="{Binding Glyph}"
-                       Stretch="UniformToFill" />
+                <fa:FontAwesome Grid.Column="0"                                
+                    FontSize="24"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Icon="{Binding Glyph}" />
                 <TextBlock Grid.Column="1"
                            VerticalAlignment="Center"
                            FontSize="16"
@@ -50,8 +54,58 @@
             </Grid>
         </DataTemplate>
     </Controls:MetroWindow.Resources>
-    
-    <!-- Content -->
-    
-    
+
+    <Controls:HamburgerMenu x:Name="HamburgerMenuControl"
+        HamburgerWidth="50"
+        IsPaneOpen="{Binding IsHamburgerMenuPaneOpen}"
+        ItemClick="HamburgerMenu_OnItemClick"
+        ItemTemplate="{StaticResource HamburgerMenuImageItem}"
+        OptionsItemClick="HamburgerMenu_OnItemClick"
+        OptionsItemTemplate="{StaticResource HamburgerMenuItem}"
+        SelectedIndex="1"
+        VerticalScrollBarOnLeftSide="False"                                
+        DisplayMode="CompactInline">
+
+        <!--  Items  -->
+        <Controls:HamburgerMenu.ItemsSource>
+            <Controls:HamburgerMenuItemCollection>
+                <Controls:HamburgerMenuGlyphItem Glyph="percent" Label="Big four summer heat" >
+                    <Controls:HamburgerMenuGlyphItem.Tag>
+                        <views:UserControl1 />
+                    </Controls:HamburgerMenuGlyphItem.Tag>
+                </Controls:HamburgerMenuGlyphItem>
+                <Controls:HamburgerMenuGlyphItem Glyph="flag" Label="Bison badlands Chillin" >
+                    <Controls:HamburgerMenuGlyphItem.Tag>
+                        <views:UserControl2 />
+                    </Controls:HamburgerMenuGlyphItem.Tag>
+                </Controls:HamburgerMenuGlyphItem>
+                <Controls:HamburgerMenuGlyphItem Glyph="commenting" Label="Giant slab in Oregon" >
+                    <Controls:HamburgerMenuGlyphItem.Tag>
+                        <views:UserControl1 />
+                    </Controls:HamburgerMenuGlyphItem.Tag>
+                </Controls:HamburgerMenuGlyphItem>
+                <Controls:HamburgerMenuGlyphItem Glyph="areaChart" Label="Lake Ann Mushroom" >
+                    <Controls:HamburgerMenuGlyphItem.Tag>
+                        <views:UserControl2 />
+                    </Controls:HamburgerMenuGlyphItem.Tag>
+                </Controls:HamburgerMenuGlyphItem>
+            </Controls:HamburgerMenuItemCollection>
+        </Controls:HamburgerMenu.ItemsSource>
+
+        <!--  Content  -->
+        <Controls:HamburgerMenu.ContentTemplate>
+            <DataTemplate>
+                <Controls:TransitioningContentControl
+                            Content="{Binding Tag}"
+                            RestartTransitionOnContentChange="True"
+                            Transition="RightReplace">
+                    <Controls:TransitioningContentControl.ContentTemplate>
+                        <DataTemplate>
+                            <UserControl Content="{Binding Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                        </DataTemplate>
+                    </Controls:TransitioningContentControl.ContentTemplate>
+                </Controls:TransitioningContentControl>
+            </DataTemplate>
+        </Controls:HamburgerMenu.ContentTemplate>
+    </Controls:HamburgerMenu>
 </Controls:MetroWindow>
