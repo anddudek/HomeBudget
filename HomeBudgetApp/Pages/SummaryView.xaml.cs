@@ -24,7 +24,6 @@ namespace HomeBudgetApp.Pages
         public SummaryView()
         {
             _percentageValue = 50;
-            _dailyLimitLeft = 10;
             _monthsPollLeft = 11;
             _todayPaymentLeft = 12;
             _todayPaymentSum = 13;
@@ -49,17 +48,17 @@ namespace HomeBudgetApp.Pages
             }
         }
 
-        private double _dailyLimitLeft;
-        public string DailyLimitLeft
+        private double _monthlyLimit;
+        public string MonthlyLimit
         {
             get
             {
-                return (_dailyLimitLeft.ToString("F2") + " zł");
+                return (_monthlyLimit.ToString("F2") + " zł");
             }
             set
             {
-                double.TryParse(value, out _dailyLimitLeft);
-                OnPropertyChanged("DailyLimitLeft");
+                double.TryParse(value, out _monthlyLimit);
+                OnPropertyChanged("MonthlyLimit");
             }
         }
 

@@ -7,6 +7,7 @@
         xmlns:converters="http://metro.mahapps.com/winfx/xaml/shared"
         xmlns:views="clr-namespace:HomeBudgetApp.Pages"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:myConverters="clr-namespace:HomeBudgetApp.Converters"
         mc:Ignorable="d"                       
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="Home Budget" Height="700" Width="525" ShowIconOnTitleBar="True" Icon="/HomeBudgetApp;component/Resources/dollar.ico" >
@@ -19,6 +20,9 @@
     </Controls:MetroWindow.RightWindowCommands>
 
     <Controls:MetroWindow.Resources>
+        <myConverters:BoolToBackgroundConverter x:Key="BoolToBackgroundConverter" />
+        <myConverters:BoolToForegroundConverter x:Key="BoolToForegroundConverter" />
+
         <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type Controls:HamburgerMenuItem}">
             <Grid Height="48">
                 <Grid.ColumnDefinitions>
@@ -42,11 +46,31 @@
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <fa:FontAwesome Grid.Column="0"                                
+                <fa:FontAwesome Grid.Column="0"                             
                     FontSize="24"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Icon="{Binding Glyph}" />
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           Text="{Binding Label}" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="HamburgerMenuBadged" DataType="{x:Type Controls:HamburgerMenuGlyphItem}">
+            <Grid Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Controls:Badged Badge="1" BadgeBackground="{Binding Glyph, Converter={StaticResource BoolToBackgroundConverter}}" BadgeForeground="{Binding Glyph, Converter={StaticResource BoolToForegroundConverter}}" BadgePlacementMode="TopRight" Margin="10">
+                    <fa:FontAwesome Grid.Column="0"                                
+                    FontSize="24"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Icon="Commenting" />
+                </Controls:Badged>                
                 <TextBlock Grid.Column="1"
                            VerticalAlignment="Center"
                            FontSize="16"
@@ -61,7 +85,7 @@
         ItemClick="HamburgerMenu_OnItemClick"
         ItemTemplate="{StaticResource HamburgerMenuImageItem}"
         OptionsItemClick="HamburgerMenu_OnItemClick"
-        OptionsItemTemplate="{StaticResource HamburgerMenuItem}"
+        OptionsItemTemplate="{StaticResource HamburgerMenuBadged}"
         SelectedIndex="0"
         VerticalScrollBarOnLeftSide="False"                                
         DisplayMode="CompactInline">
@@ -69,28 +93,49 @@
         <!--  Items  -->
         <Controls:HamburgerMenu.ItemsSource>
             <Controls:HamburgerMenuItemCollection>
-                <Controls:HamburgerMenuGlyphItem Glyph="percent" Label="Big four summer heat" >
+                <Controls:HamburgerMenuGlyphItem Glyph="pieChart" Label="Podsumowanie" >
                     <Controls:HamburgerMenuGlyphItem.Tag>
                         <views:SummaryView  />
                     </Controls:HamburgerMenuGlyphItem.Tag>
                 </Controls:HamburgerMenuGlyphItem>
-                <Controls:HamburgerMenuGlyphItem Glyph="flag" Label="Bison badlands Chillin" >
+                <Controls:HamburgerMenuGlyphItem Glyph="user" Label="Logowanie" >
                     <Controls:HamburgerMenuGlyphItem.Tag>
-                        <views:UserControl2 />
+                        <views:LoginView />
                     </Controls:HamburgerMenuGlyphItem.Tag>
                 </Controls:HamburgerMenuGlyphItem>
-                <Controls:HamburgerMenuGlyphItem Glyph="commenting" Label="Giant slab in Oregon" >
+                <Controls:HamburgerMenuGlyphItem Glyph="areaChart" Label="Historia" >
                     <Controls:HamburgerMenuGlyphItem.Tag>
                         <views:SummaryView />
                     </Controls:HamburgerMenuGlyphItem.Tag>
                 </Controls:HamburgerMenuGlyphItem>
-                <Controls:HamburgerMenuGlyphItem Glyph="areaChart" Label="Lake Ann Mushroom" >
+                <Controls:HamburgerMenuGlyphItem Glyph="search" Label="Szukaj" >
+                    <Controls:HamburgerMenuGlyphItem.Tag>
+                        <views:UserControl2 />
+                    </Controls:HamburgerMenuGlyphItem.Tag>
+                </Controls:HamburgerMenuGlyphItem>
+                <Controls:HamburgerMenuGlyphItem Glyph="creditCard" Label="Zmiana limitu" >
+                    <Controls:HamburgerMenuGlyphItem.Tag>
+                        <views:UserControl2 />
+                    </Controls:HamburgerMenuGlyphItem.Tag>
+                </Controls:HamburgerMenuGlyphItem>
+                <Controls:HamburgerMenuGlyphItem Glyph="users" Label="Użytkownicy" >
                     <Controls:HamburgerMenuGlyphItem.Tag>
                         <views:UserControl2 />
                     </Controls:HamburgerMenuGlyphItem.Tag>
                 </Controls:HamburgerMenuGlyphItem>
             </Controls:HamburgerMenuItemCollection>
         </Controls:HamburgerMenu.ItemsSource>
+
+        <!-- Options -->
+        <Controls:HamburgerMenu.OptionsItemsSource>
+            <Controls:HamburgerMenuItemCollection>
+                <Controls:HamburgerMenuGlyphItem Glyph="{Binding BadgeVisible}" Label="Wiadomości" >
+                    <Controls:HamburgerMenuGlyphItem.Tag>
+                        <views:UserControl2 />
+                    </Controls:HamburgerMenuGlyphItem.Tag>
+                </Controls:HamburgerMenuGlyphItem>
+            </Controls:HamburgerMenuItemCollection>
+        </Controls:HamburgerMenu.OptionsItemsSource>
 
         <!--  Content  -->
         <Controls:HamburgerMenu.ContentTemplate>

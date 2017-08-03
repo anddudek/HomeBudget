@@ -25,7 +25,9 @@ namespace HomeBudgetApp
     {
         public MainWindow()
         {
+            _badgeVisible = true;
             InitializeComponent();
+            DataContext = this;
         }
 
         private void HamburgerMenu_OnItemClick(object sender, ItemClickEventArgs e)
@@ -41,14 +43,19 @@ namespace HomeBudgetApp
             }
         }
 
-        public void Use() { }
-
-        public bool CanUse()
+        private bool _badgeVisible;
+        public bool BadgeVisible
         {
-            return true;
+            get { return _badgeVisible; }
+            set
+            {
+                if (_badgeVisible != value)
+                {
+                    _badgeVisible = value;
+                    OnPropertyChanged("BadgeVisible");
+                }
+            }
         }
-
-        public ICommand Lol { get { return new RelayCommand(Use, CanUse); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
