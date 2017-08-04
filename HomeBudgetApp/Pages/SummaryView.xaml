@@ -36,7 +36,7 @@
         <fa:FontAwesome     
             Grid.Column="1"
             FontSize="24"
-            Spin="True"
+            Spin="False"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Icon="Refresh" />

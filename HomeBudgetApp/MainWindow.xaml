@@ -115,12 +115,17 @@
                 </Controls:HamburgerMenuGlyphItem>
                 <Controls:HamburgerMenuGlyphItem Glyph="creditCard" Label="Zmiana limitu" >
                     <Controls:HamburgerMenuGlyphItem.Tag>
-                        <views:UserControl2 />
+                        <views:LimitView />
                     </Controls:HamburgerMenuGlyphItem.Tag>
                 </Controls:HamburgerMenuGlyphItem>
                 <Controls:HamburgerMenuGlyphItem Glyph="users" Label="Użytkownicy" >
                     <Controls:HamburgerMenuGlyphItem.Tag>
-                        <views:UserControl2 />
+                        <views:UsersView />
+                    </Controls:HamburgerMenuGlyphItem.Tag>
+                </Controls:HamburgerMenuGlyphItem>
+                <Controls:HamburgerMenuGlyphItem Glyph="plusSquare" Label="Dodaj transakcję" >
+                    <Controls:HamburgerMenuGlyphItem.Tag>
+                        <views:TransactionView />
                     </Controls:HamburgerMenuGlyphItem.Tag>
                 </Controls:HamburgerMenuGlyphItem>
             </Controls:HamburgerMenuItemCollection>
@@ -131,7 +136,7 @@
             <Controls:HamburgerMenuItemCollection>
                 <Controls:HamburgerMenuGlyphItem Glyph="{Binding BadgeVisible}" Label="Wiadomości" >
                     <Controls:HamburgerMenuGlyphItem.Tag>
-                        <views:UserControl2 />
+                        <views:MessageView />
                     </Controls:HamburgerMenuGlyphItem.Tag>
                 </Controls:HamburgerMenuGlyphItem>
             </Controls:HamburgerMenuItemCollection>

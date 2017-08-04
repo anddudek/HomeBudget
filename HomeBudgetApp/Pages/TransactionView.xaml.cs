@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace HomeBudgetApp.Pages
 {
     /// <summary>
-    /// Interaction logic for UsersPage.xaml
+    /// Interaction logic for TransactionView.xaml
     /// </summary>
-    public partial class UsersPage : Page
+    public partial class TransactionView : UserControl
     {
-        public UsersPage()
+        public TransactionView()
         {
             InitializeComponent();
         }
