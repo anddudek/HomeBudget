@@ -105,12 +105,12 @@
                 </Controls:HamburgerMenuGlyphItem>
                 <Controls:HamburgerMenuGlyphItem Glyph="areaChart" Label="Historia" >
                     <Controls:HamburgerMenuGlyphItem.Tag>
-                        <views:SummaryView />
+                        <views:HistoryView />
                     </Controls:HamburgerMenuGlyphItem.Tag>
                 </Controls:HamburgerMenuGlyphItem>
                 <Controls:HamburgerMenuGlyphItem Glyph="search" Label="Szukaj" >
                     <Controls:HamburgerMenuGlyphItem.Tag>
-                        <views:UserControl2 />
+                        <views:SearchView />
                     </Controls:HamburgerMenuGlyphItem.Tag>
                 </Controls:HamburgerMenuGlyphItem>
                 <Controls:HamburgerMenuGlyphItem Glyph="creditCard" Label="Zmiana limitu" >

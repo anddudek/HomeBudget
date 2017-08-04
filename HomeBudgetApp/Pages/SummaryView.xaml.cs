@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using HomeBudgetApp.Helpers;
 
 namespace HomeBudgetApp.Pages
 {
@@ -23,12 +24,17 @@ namespace HomeBudgetApp.Pages
     {
         public SummaryView()
         {
+            UpdateDisplay();
+            InitializeComponent();
+            this.DataContext = this;
+        }
+
+        private void UpdateDisplay()
+        {
             _percentageValue = 50;
             _monthsPollLeft = 11;
             _todayPaymentLeft = 12;
             _todayPaymentSum = 13;
-            InitializeComponent();
-            this.DataContext = this;
         }
 
         private double _percentageValue;
@@ -111,6 +117,18 @@ namespace HomeBudgetApp.Pages
                 return (_percentageValue.ToString("F0") + "%");
             }
         }
+
+        private bool CanRefresh()
+        {
+            return true;
+        }
+
+        private void Refresh()
+        {
+            Console.WriteLine("Refreshed");
+        }
+
+        public ICommand RefreshCommand { get { return new RelayCommand(Refresh, CanRefresh); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
