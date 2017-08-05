@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace LibHomeBudget.Models
 {
-    public class Settings
+    public class Setting
     {
+        public Guid Id { get; set; }
         public double DailyLimit { get; set; }
         public string Message { get; set; }
         public Guid MessageCreatorId { get; set; }

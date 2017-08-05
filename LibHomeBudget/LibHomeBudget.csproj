@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,15 +48,54 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\DatabaseContext.cs" />
+    <Compile Include="InitializeDB.cs" />
+    <Compile Include="Migrations\201708051547404_InitMigration.cs" />
+    <Compile Include="Migrations\201708051547404_InitMigration.Designer.cs">
+      <DependentUpon>201708051547404_InitMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708051556373_InitMigration2.cs" />
+    <Compile Include="Migrations\201708051556373_InitMigration2.Designer.cs">
+      <DependentUpon>201708051556373_InitMigration2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708051614286_InitMigration3.cs" />
+    <Compile Include="Migrations\201708051614286_InitMigration3.Designer.cs">
+      <DependentUpon>201708051614286_InitMigration3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708051617237_InitMigration4.cs" />
+    <Compile Include="Migrations\201708051617237_InitMigration4.Designer.cs">
+      <DependentUpon>201708051617237_InitMigration4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Operations\PasswordOperations.cs" />
+    <Compile Include="Operations\SettingOperations.cs" />
+    <Compile Include="Operations\TransactionOperations.cs" />
+    <Compile Include="Operations\UserOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="appsettings.json" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201708051547404_InitMigration.resx">
+      <DependentUpon>201708051547404_InitMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708051556373_InitMigration2.resx">
+      <DependentUpon>201708051556373_InitMigration2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708051614286_InitMigration3.resx">
+      <DependentUpon>201708051614286_InitMigration3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708051617237_InitMigration4.resx">
+      <DependentUpon>201708051617237_InitMigration4.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

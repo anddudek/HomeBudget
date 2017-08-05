@@ -12,8 +12,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0"  Header="Oblicz nowy limit" Custom:ControlsHelper.ContentCharacterCasing="Normal">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Obecny limit:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" FontSize="18"/>
+        <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding DailyLimit}" Margin="5,0,5,0" FontSize="18"/>
+        <GroupBox Grid.Row="1" Grid.ColumnSpan="2" Header="Oblicz nowy limit" Custom:ControlsHelper.ContentCharacterCasing="Normal">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"/>
@@ -25,13 +32,13 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Text="Dni w obecnym miesiącu:" VerticalAlignment="Center"/>
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CurrentMonthDays}" VerticalAlignment="Center" Height="30"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding NumberOfDays}" VerticalAlignment="Center" Height="30"/>
                 <TextBlock Grid.Row="1" Text="Kwota do wydania w obecnym miesiącu:" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" Margin="0,5,0,5" Height="30"/>
                 <Button Content="Wylicz" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5" Height="30"/>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="1"  Header="Wprowadź nowy limit" Custom:ControlsHelper.ContentCharacterCasing="Normal">
+        <GroupBox Grid.Row="2" Grid.ColumnSpan="2" Header="Wprowadź nowy limit" Custom:ControlsHelper.ContentCharacterCasing="Normal">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"/>
@@ -42,8 +49,8 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Text="Podaj nowy limit:" VerticalAlignment="Center"/>
-                <TextBox Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" Margin="0,5,0,5" Height="30"/>
-                <Button Content="Wprowadź" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5" Height="30"/>
+                <TextBox Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" Margin="0,5,0,5" Height="30" Text="{Binding SetNewLimit}"/>
+                <Button Content="Wprowadź" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5" Height="30" Command="{Binding SetLimitCommand}"/>
             </Grid>
         </GroupBox>
     </Grid>
