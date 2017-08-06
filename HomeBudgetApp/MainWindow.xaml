@@ -72,6 +72,7 @@
                     Icon="Commenting" />
                 </Controls:Badged>                
                 <TextBlock Grid.Column="1"
+                           Name="Logged"
                            VerticalAlignment="Center"
                            FontSize="16"
                            Text="{Binding Label}" />
@@ -95,7 +96,7 @@
             <Controls:HamburgerMenuItemCollection>
                 <Controls:HamburgerMenuGlyphItem Glyph="pieChart" Label="Podsumowanie" >
                     <Controls:HamburgerMenuGlyphItem.Tag>
-                        <views:SummaryView  />
+                        <views:SummaryView />
                     </Controls:HamburgerMenuGlyphItem.Tag>
                 </Controls:HamburgerMenuGlyphItem>
                 <Controls:HamburgerMenuGlyphItem Glyph="user" Label="Logowanie" >

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using HomeBudgetApp.Helpers;
+using LibHomeBudget.Operations;
 
 namespace HomeBudgetApp.Pages
 {
@@ -107,6 +108,23 @@ namespace HomeBudgetApp.Pages
             {
                 double.TryParse(value, out _todayPaymentSum);
                 OnPropertyChanged("TodayPaymentSum");
+            }
+        }
+
+        public List<UserItemSource> TodaysPayments
+        {
+            get
+            {
+                List<UserItemSource> uList = new List<UserItemSource>();
+                var users = UserOperations.GetAllUsersList();
+                foreach (var u in users)
+                {
+                    var uis = new UserItemSource();
+                    uis.Amount = TransactionOperations.GetUserTodayPayments(u).ToString() + " zł";
+                    uis.Name = u;
+                    uList.Add(uis);
+                }
+                return uList;
             }
         }
 

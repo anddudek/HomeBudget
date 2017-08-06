@@ -25,9 +25,39 @@ namespace HomeBudgetApp
     {
         public MainWindow()
         {
+            IsSummaryEnabled = true;
+            MWContainer.MW = this;
             _badgeVisible = true;
             InitializeComponent();
             DataContext = this;
+        }
+
+        private string _CurrentUserMessage;
+        public string CurrentUserMessage
+        {
+            get
+            {
+                return _CurrentUserMessage;
+            }
+            set
+            {
+                _CurrentUserMessage = value;
+                OnPropertyChanged(CurrentUserMessage);
+            }
+        }
+
+        private bool _isSummaryEnabled;
+        public bool IsSummaryEnabled
+        {
+            get { return _isSummaryEnabled; }
+            set
+            {
+                if (_isSummaryEnabled != value)
+                {
+                    _isSummaryEnabled = value;
+                    OnPropertyChanged("IsSummaryEnabled");
+                }
+            }
         }
 
         private void HamburgerMenu_OnItemClick(object sender, ItemClickEventArgs e)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibHomeBudget.Operations;
 
 namespace AppInitializeDb
 {
@@ -38,7 +39,12 @@ namespace AppInitializeDb
             //Console.WriteLine("adding settings...");
             //LibHomeBudget.InitializeDB.InitializeSettings(30, "hejo bobq", "Andrzej");
             //Console.Write("Done!");
-
+            //TransactionOperations.AddNewTransaction(DateTime.Now, 5, TransactionOperations.GetCategoryGuid(TransactionOperations.GetCategoriesList().First()), UserOperations.GetUserGuid("Andrzej"));
+            //TransactionOperations.AddNewTransaction(DateTime.Now, 45, TransactionOperations.GetCategoryGuid(TransactionOperations.GetCategoriesList().First()), UserOperations.GetUserGuid("Klaudia"));
+            //TransactionOperations.AddNewTransaction(DateTime.Now.AddDays(-1), 5, TransactionOperations.GetCategoryGuid(TransactionOperations.GetCategoriesList().First()), UserOperations.GetUserGuid("Andrzej"));
+            //TransactionOperations.AddNewTransaction(DateTime.Now.AddDays(-1), 45, TransactionOperations.GetCategoryGuid(TransactionOperations.GetCategoriesList().First()), UserOperations.GetUserGuid("Klaudia"));
+            Console.WriteLine(TransactionOperations.GetUserTodayPayments("Andrzej").ToString());
+            Console.ReadKey();
         }
     }
 }

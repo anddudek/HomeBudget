@@ -42,6 +42,45 @@ namespace LibHomeBudget.Operations
                 return CheckPassword(_password, q.FirstOrDefault().Password, q.FirstOrDefault().Hash);
             }
         }
+        public static bool ChangePassword(string _login, string _password)
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                if (ctx.Users.Where(x => string.Equals(_login.ToUpper(), x.Login.ToUpper())).ToList().Count == 0)
+                {
+                    return false;
+                }
+                string salt = PasswordOperations.GenerateSalt();
+                ctx.Users.Where(x => string.Equals(_login.ToUpper(), x.Login.ToUpper())).First().Hash = salt;
+                User a = ctx.Users.Where(x => string.Equals(_login.ToUpper(), x.Login.ToUpper())).First();
+                ctx.Users.Where(x => string.Equals(_login.ToUpper(), x.Login.ToUpper())).First().Password = PasswordOperations.HashPassword(_password, salt);
+                return true;
+            }
+        }
+
+        public static List<string> GetAllUsersList()
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                return ctx.Users.Select(x => x.Name).ToList();
+            }
+        }
+
+        public static List<string> GetAllUsersLoginList()
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                return ctx.Users.Select(x => x.Login).ToList();
+            }
+        }
+
+        public static Guid GetUserGuid(string _login)
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                return ctx.Users.Where(x => x.Login.ToUpper().Equals(_login.ToUpper())).First().Id;
+            }
+        }
     }
 
 }

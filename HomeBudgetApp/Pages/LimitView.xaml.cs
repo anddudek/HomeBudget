@@ -37,11 +37,11 @@ namespace HomeBudgetApp.Pages
             }
         }
         
-        public double DailyLimit
+        public string DailyLimit
         {
             get
             {
-                return SettingOperations.GetDailyLimit();
+                return (SettingOperations.GetDailyLimit() + " zł");
             } 
         }
 
@@ -52,6 +52,18 @@ namespace HomeBudgetApp.Pages
             set
             {
                 _setNewLimit = value;
+                OnPropertyChanged("SetNewLimit");
+            }
+        }
+
+        private string _amountToSpent;
+        public string AmountToSpent
+        {
+            get { return _amountToSpent; }
+            set
+            {
+                _amountToSpent = value;
+                OnPropertyChanged("AmountToSpent");
             }
         }
 
@@ -65,10 +77,37 @@ namespace HomeBudgetApp.Pages
             double lim;
             if (double.TryParse(SetNewLimit, out lim))
             {
-                SettingOperations.SetLimit(lim);
-                OnPropertyChanged("DailyLimit");
+                MessageBoxResult result = MessageBox.Show(String.Format("Czy chcesz zmienić limit z {0} na {1} ?", DailyLimit, SetNewLimit), "Zmiana limitu", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    SettingOperations.SetLimit(lim);
+                    OnPropertyChanged("DailyLimit");
+                }
             }
         }
+
+        private bool CanCalculateNewLimit()
+        {
+            return true;
+        }
+
+        private double _newLimit;
+        private void CalculateNewLimit()
+        {
+            double _amount;
+            if (double.TryParse(AmountToSpent, out _amount))
+            {
+                _newLimit = Math.Floor(_amount / NumberOfDays);
+                MessageBoxResult result = MessageBox.Show(String.Format("Czy chcesz zmienić limit z {0} na {1} ?", DailyLimit, _newLimit), "Zmiana limitu", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    SettingOperations.SetLimit(_newLimit);
+                    OnPropertyChanged("DailyLimit");
+                }
+            }
+        }
+
+        public ICommand CalculateNewLimitCommand { get { return new RelayCommand(CalculateNewLimit, CanCalculateNewLimit); } }
 
         public ICommand SetLimitCommand { get { return new RelayCommand(SetNewLimitF, CanSetNewLimit); } }
 

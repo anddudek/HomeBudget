@@ -53,16 +53,18 @@
                                  Style="{StaticResource CircularProgressBarStyle}" FontSize="36"/>
         <TextBlock Text="Dzisiejsze wydatki:" Grid.Row="3"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0" />
         <ListView ItemsSource="{Binding TodaysPayments}" Grid.Row="4" Grid.ColumnSpan="2" Background="Transparent">
+            <ListView.ItemTemplate>
             <DataTemplate>
-                <Grid>
+                <Grid Margin="30,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{Binding Name}" HorizontalAlignment="Left" Margin="30,0,0,0"/>
-                    <TextBlock Grid.Column="1" Text="{Binding Amount}" HorizontalAlignment="Right" Margin="0,10,0,0"/>
+                    <TextBlock Grid.Column="0" Text="{Binding Name}" HorizontalAlignment="Left" />
+                    <TextBlock Grid.Column="1" Text="{Binding Amount}" HorizontalAlignment="Center" />
                 </Grid>
             </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
         <TextBlock Text="Suma:" Grid.Row="5"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0" />
         <TextBlock Text="{Binding TodayPaymentSum}" Grid.Row="5"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" />

@@ -81,6 +81,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\MWContainer.cs" />
+    <Compile Include="Helpers\UserItemSource.cs" />
+    <Compile Include="Wizards\ChangePasswordWizard.xaml.cs">
+      <DependentUpon>ChangePasswordWizard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Wizards\CreateNewUserWizard.xaml.cs">
+      <DependentUpon>CreateNewUserWizard.xaml</DependentUpon>
+    </Compile>
     <Page Include="Helpers\styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -131,11 +139,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\UserControl2.xaml">
+    <Page Include="Pages\UsersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\UsersView.xaml">
+    <Page Include="Wizards\ChangePasswordWizard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Wizards\CreateNewUserWizard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,9 +173,6 @@
     </Compile>
     <Compile Include="Pages\TransactionView.xaml.cs">
       <DependentUpon>TransactionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\UserControl2.xaml.cs">
-      <DependentUpon>UserControl2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\UsersView.xaml.cs">
       <DependentUpon>UsersView.xaml</DependentUpon>
