@@ -13,9 +13,11 @@
         Title="Home Budget" Height="700" Width="525" ShowIconOnTitleBar="True" Icon="/HomeBudgetApp;component/Resources/dollar.ico" >
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <TextBlock Margin="4 0 0 0"
+            <TextBlock 
+                Name="LoginTXT"
+                Margin="4 0 0 0"
                 VerticalAlignment="Center"
-                Text="{Binding CurrentUserMessage}" />
+                Text="{Binding CurrentUserMessage}"  />
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 

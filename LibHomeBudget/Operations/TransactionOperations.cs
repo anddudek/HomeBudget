@@ -45,5 +45,24 @@ namespace LibHomeBudget.Operations
                 return q1.Sum(x => x.Cost);
             }
         }
+
+        public static Guid GetDepositCatGuid()
+        {
+            return new Guid("C041805D-5CEA-4043-B349-554ABB638EA4");
+        }
+
+        public static double GetMonthlyPollLeft()
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                var td = DateTime.Now.Day;
+                Guid dep = GetDepositCatGuid();
+                var cost = ctx.Transactions.Where(x => (x.CategoryId != dep && x.Date.Month == DateTime.Now.Month && x.Date.Year == DateTime.Now.Year)).Select(x => x.Cost).DefaultIfEmpty(0).Sum();
+                var depo = ctx.Transactions.Where(x => (x.CategoryId == dep && x.Date.Month == DateTime.Now.Month && x.Date.Year == DateTime.Now.Year)).Select(x => x.Cost).DefaultIfEmpty(0).Sum();
+                return DateTime.Now.Day * SettingOperations.GetDailyLimit() - cost + depo;
+            }
+        }
+
+        //public static double 
     }
 }

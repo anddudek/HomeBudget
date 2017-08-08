@@ -27,6 +27,7 @@ namespace HomeBudgetApp.Pages
         {
             DataContext = this;
             InitializeComponent();
+            MWContainer.LW = this;
         }
         
         public int NumberOfDays
@@ -43,6 +44,11 @@ namespace HomeBudgetApp.Pages
             {
                 return (SettingOperations.GetDailyLimit() + " zł");
             } 
+        }
+
+        public void UpdateCommands()
+        {
+            CommandManager.InvalidateRequerySuggested();
         }
 
         private string _setNewLimit;
@@ -69,7 +75,7 @@ namespace HomeBudgetApp.Pages
 
         private bool CanSetNewLimit()
         {
-            return true;
+            return Properties.Settings.Default.CurrentLoginUser != "LoggedOut";
         }
 
         private void SetNewLimitF()
@@ -88,7 +94,7 @@ namespace HomeBudgetApp.Pages
 
         private bool CanCalculateNewLimit()
         {
-            return true;
+            return Properties.Settings.Default.CurrentLoginUser != "LoggedOut";
         }
 
         private double _newLimit;

@@ -9,5 +9,7 @@ namespace HomeBudgetApp.Helpers
     public class MWContainer
     {
         public static HomeBudgetApp.MainWindow MW = null;
+        public static HomeBudgetApp.Pages.LimitView LW = null;
+        public static HomeBudgetApp.Pages.UsersView UsP = null;
     }
 }

@@ -28,6 +28,7 @@ namespace HomeBudgetApp.Pages
         {
             InitializeComponent();
             DataContext = this;
+            MWContainer.UsP = this;
         }
 
         public string SelectedName { get; set; }
@@ -40,9 +41,14 @@ namespace HomeBudgetApp.Pages
             }
         }
 
+        public void UpdateCommands()
+        {
+            CommandManager.InvalidateRequerySuggested();
+        }
+
         public bool CanCreateNewUser()
         {
-            return true;
+            return Properties.Settings.Default.CurrentLoginUser != "LoggedOut"; ;
         }
 
         public void CreateNewUser()
@@ -53,7 +59,7 @@ namespace HomeBudgetApp.Pages
 
         public bool CanChangePassword()
         {
-            return true;
+            return Properties.Settings.Default.CurrentLoginUser != "LoggedOut"; ;
         }
 
         public void ChangePassword()

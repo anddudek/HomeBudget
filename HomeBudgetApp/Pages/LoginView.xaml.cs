@@ -29,6 +29,21 @@ namespace HomeBudgetApp.Pages
             DataContext = this;
         }
 
+        private string _currentLoggedUser;
+        public string CurrentLoggedUser
+        {
+            get
+            {
+                return Properties.Settings.Default.CurrentLoginUser;
+            }
+            set
+            {
+                Properties.Settings.Default.CurrentLoginUser = value;
+                Properties.Settings.Default.Save();
+                OnPropertyChanged("CurrentLoggedUser");
+            }
+        }
+
         private string _login;
         public string Login
         {
@@ -73,15 +88,54 @@ namespace HomeBudgetApp.Pages
         {
             if (UserOperations.TryLogin(Login, _Password.Password))
             {
-                MWContainer.MW.CurrentUserMessage = Login;
+                CurrentLoggedUser = LoginBox;
+                OnPropertyChanged("CurrentLoggedUser");
+                if (MWContainer.LW != null)
+                {
+                    MWContainer.LW.UpdateCommands();
+                }
+                /*if (MWContainer.UsP != null)
+                {
+                    MWContainer.UsP.UpdateCommands();
+                }*/
             }
             else
             {
+                CurrentLoggedUser = "LoggedOut";
+                OnPropertyChanged("CurrentLoggedUser");
                 MessageBox.Show("Nieprawidłowy login / hasło", "Niepowodzenie");
             }
         }
 
         public ICommand LoginCommand { get { return new RelayCommand(LoginF, CanLoginF); } }
+
+        private bool CanLogoutF()
+        {
+            return true;
+        }
+
+        private void LogoutF()
+        {
+            if (CurrentLoggedUser != "LoggedOut")
+            {
+                CurrentLoggedUser = "LoggedOut";
+                OnPropertyChanged("CurrentLoggedUser"); 
+                if (MWContainer.LW != null)
+                {
+                    MWContainer.LW.UpdateCommands();
+                }
+                /*if (MWContainer.UsP != null)
+                {
+                    MWContainer.UsP.UpdateCommands();
+                }*/
+            }
+            else
+            {
+                MessageBox.Show("Użytkownik już wylogowany");
+            }
+        }
+
+        public ICommand LogoutCommand { get { return new RelayCommand(LogoutF, CanLogoutF); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

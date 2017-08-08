@@ -13,12 +13,16 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="6*" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ListView Grid.Row="1" Grid.Column="0" Margin="15, 0, 15 ,0" ItemsSource="{Binding UserLogins}" SelectedItem="{Binding Login}" />
-        <Grid Grid.Row="1" Grid.Column="1" Margin="15,0,15,0">
+        <TextBlock Grid.Row="1" Text="Zalogowano jako:" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CurrentLoggedUser}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <ListView Grid.Row="2" Grid.Column="0" Margin="15, 0, 15 ,0" ItemsSource="{Binding UserLogins}" SelectedItem="{Binding Login}" />
+        <Grid Grid.Row="2" Grid.Column="1" Margin="15,0,15,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
@@ -32,5 +36,7 @@
             <PasswordBox Grid.Row="3" Margin="0,5,0,5" Height="40" VerticalContentAlignment="Center" Name="_Password"/>
             <Button Content="Zaloguj" Grid.Row="4" Height="40" Command="{Binding LoginCommand}"/>
         </Grid>
+
+        <Button Content="Wyloguj" Grid.Row="3" Grid.Column="1" Height="40" Margin="15,10,15,0" Command="{Binding LogoutCommand}"/>
     </Grid>
 </UserControl>

@@ -36,7 +36,7 @@
         <fa:FontAwesome     
             Grid.Column="1"
             FontSize="24"
-            Spin="False"
+            Spin="{Binding LoadingState}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Icon="Refresh" />
@@ -48,7 +48,7 @@
         <TextBlock Text="Dzienny limit:" Grid.Row="1"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0" />
         <TextBlock Text="{Binding MonthlyLimit}" Grid.Row="1"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" />
         <cpb:CircularProgressBar Grid.Row="2" Grid.ColumnSpan="2" StrokeThickness="15" Radius="100"
-                                 Value="{Binding Path=PercentageValue, ElementName=SummaryControl}" 
+                                 Value="{Binding Path=PercentageValue, Mode=OneWay, ElementName=SummaryControl}" 
                                  Text="{Binding TodayPaymentLeft}"
                                  Style="{StaticResource CircularProgressBarStyle}" FontSize="36"/>
         <TextBlock Text="Dzisiejsze wydatki:" Grid.Row="3"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0" />
@@ -70,7 +70,7 @@
         <TextBlock Text="{Binding TodayPaymentSum}" Grid.Row="5"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" />
         <TextBlock Text="Dodatkowa pula miesięczna:" Grid.Row="6"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0" />
         <TextBlock Text="{Binding MonthsPollLeft}" Grid.Row="6"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" />
-        <TextBlock Text="Pozostało:" Grid.Row="7"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0" FontSize="20" FontWeight="Bold" />
+        <TextBlock Text="Pozostało dziś:" Grid.Row="7"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0" FontSize="20" FontWeight="Bold" />
         <TextBlock Text="{Binding TodayPaymentLeft}" Grid.Row="7"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" FontSize="20" FontWeight="Bold" Foreground="Green"/>
     </Grid>
     

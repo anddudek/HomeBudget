@@ -25,12 +25,14 @@ namespace HomeBudgetApp
     {
         public MainWindow()
         {
-            IsSummaryEnabled = true;
+            CurrentUserMessage = "Zalogowano jako: " + Properties.Settings.Default.CurrentLoginUser;
             MWContainer.MW = this;
-            _badgeVisible = true;
+            _badgeVisible = false;
             InitializeComponent();
-            DataContext = this;
+            DataContext = this;            
         }
+
+        public bool IsHamburgerMenuPaneOpen { get; set; }
 
         private string _CurrentUserMessage;
         public string CurrentUserMessage
@@ -46,24 +48,19 @@ namespace HomeBudgetApp
             }
         }
 
-        private bool _isSummaryEnabled;
-        public bool IsSummaryEnabled
-        {
-            get { return _isSummaryEnabled; }
-            set
-            {
-                if (_isSummaryEnabled != value)
-                {
-                    _isSummaryEnabled = value;
-                    OnPropertyChanged("IsSummaryEnabled");
-                }
-            }
-        }
-
         private void HamburgerMenu_OnItemClick(object sender, ItemClickEventArgs e)
         {
             // instead using binding Content="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay, Path=SelectedItem}"
             // we can do this
+            var a = ((MahApps.Metro.Controls.HamburgerMenuGlyphItem)e.ClickedItem).Tag.GetType();
+            switch (a.Name)
+            {
+                case "LimitView":
+                    ((MahApps.Metro.Controls.HamburgerMenuGlyphItem)e.ClickedItem).Tag = new HomeBudgetApp.Pages.LimitView();
+                    break;
+                default:
+                    break;
+            }
             this.HamburgerMenuControl.Content = e.ClickedItem;
 
             // close the menu if a item was selected

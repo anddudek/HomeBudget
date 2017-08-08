@@ -28,86 +28,75 @@ namespace HomeBudgetApp.Pages
             UpdateDisplay();
             InitializeComponent();
             this.DataContext = this;
+            LoadingState = false;
         }
 
         private void UpdateDisplay()
         {
-            _percentageValue = 50;
-            _monthsPollLeft = 11;
-            _todayPaymentLeft = 12;
-            _todayPaymentSum = 13;
+            LoadingState = true ;
+            OnPropertyChanged("");            
         }
 
-        private double _percentageValue;
+        public bool LoadingState { get; set; }
+
         public double PercentageValue
         {
             get
             {
-                return _percentageValue;
-            }
-            set
-            {
-                if (value != _percentageValue)
+                double lim = SettingOperations.GetDailyLimit();
+                double sum = 0;
+                var users = UserOperations.GetAllUsersList();
+                foreach (var u in users)
                 {
-                    _percentageValue = value;
-                    OnPropertyChanged("PercentageValue");
+                    sum += TransactionOperations.GetUserTodayPayments(u);
                 }
+                return (sum / lim) * 100;       
             }
         }
 
-        private double _monthlyLimit;
         public string MonthlyLimit
         {
             get
             {
-                return (_monthlyLimit.ToString("F2") + " zł");
-            }
-            set
-            {
-                double.TryParse(value, out _monthlyLimit);
-                OnPropertyChanged("MonthlyLimit");
+                return SettingOperations.GetDailyLimit().ToString() + " zł";
             }
         }
 
-        private double _monthsPollLeft;
         public string MonthsPollLeft
         {
             get
             {
-                return (_monthsPollLeft.ToString("F2") + " zł");
-            }
-            set
-            {
-                double.TryParse(value, out _monthsPollLeft);
-                OnPropertyChanged("MonthsPollLeft");
+                return TransactionOperations.GetMonthlyPollLeft().ToString() + " zł";
             }
         }
 
-        private double _todayPaymentLeft;
         public string TodayPaymentLeft
         {
             get
             {
-                return (_todayPaymentLeft.ToString("F2") + " zł");
-            }
-            set
-            {
-                double.TryParse(value, out _todayPaymentLeft);
-                OnPropertyChanged("TodayPaymentLeft");
+                double lim = SettingOperations.GetDailyLimit();
+                double sum = 0;
+                var users = UserOperations.GetAllUsersList();
+                foreach (var u in users)
+                {
+                    sum += TransactionOperations.GetUserTodayPayments(u);
+                }
+                LoadingState = false;
+                return (lim - sum).ToString() + " zł";
             }
         }
 
-        private double _todayPaymentSum;
         public string TodayPaymentSum
         {
             get
             {
-                return (_todayPaymentSum.ToString("F2") + " zł");
-            }
-            set
-            {
-                double.TryParse(value, out _todayPaymentSum);
-                OnPropertyChanged("TodayPaymentSum");
+                double sum = 0;
+                var users = UserOperations.GetAllUsersList();
+                foreach (var u in users)
+                {
+                    sum += TransactionOperations.GetUserTodayPayments(u);
+                }
+                return sum.ToString() + " zł";
             }
         }
 
@@ -132,7 +121,14 @@ namespace HomeBudgetApp.Pages
         {
             get
             {
-                return (_percentageValue.ToString("F0") + "%");
+                double lim = SettingOperations.GetDailyLimit();
+                double sum = 0;
+                var users = UserOperations.GetAllUsersList();
+                foreach (var u in users)
+                {
+                    sum += TransactionOperations.GetUserTodayPayments(u);
+                }
+                return (lim - sum).ToString() + " zł";
             }
         }
 
@@ -143,7 +139,13 @@ namespace HomeBudgetApp.Pages
 
         private void Refresh()
         {
-            Console.WriteLine("Refreshed");
+            var t = Task.Run(() => UpdateDisplay());
+            t.ContinueWith((r) => StopLoading());
+        }
+
+        private void StopLoading()
+        {
+            LoadingState = false;
         }
 
         public ICommand RefreshCommand { get { return new RelayCommand(Refresh, CanRefresh); } }

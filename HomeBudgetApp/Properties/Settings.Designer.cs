@@ -22,5 +22,17 @@ namespace HomeBudgetApp.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("LoggedOut")]
+        public string CurrentLoginUser {
+            get {
+                return ((string)(this["CurrentLoginUser"]));
+            }
+            set {
+                this["CurrentLoginUser"] = value;
+            }
+        }
     }
 }
