@@ -13,5 +13,6 @@ namespace LibHomeBudget.Models
         public double Cost { get; set; }
         public Guid CategoryId { get; set; }
         public Guid UserId { get; set; }
+        public string Description { get; set; }
     }
 }

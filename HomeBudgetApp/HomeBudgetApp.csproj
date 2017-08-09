@@ -82,7 +82,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\MWContainer.cs" />
+    <Compile Include="Helpers\RelayCommandP.cs" />
+    <Compile Include="Helpers\TransactionItemSource.cs" />
     <Compile Include="Helpers\UserItemSource.cs" />
+    <Compile Include="Wizards\AddNewDepositWizard.xaml.cs">
+      <DependentUpon>AddNewDepositWizard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Wizards\AddNewPaymentWizard.xaml.cs">
+      <DependentUpon>AddNewPaymentWizard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Wizards\ChangePasswordWizard.xaml.cs">
       <DependentUpon>ChangePasswordWizard.xaml</DependentUpon>
     </Compile>
@@ -140,6 +148,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\UsersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Wizards\AddNewDepositWizard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Wizards\AddNewPaymentWizard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

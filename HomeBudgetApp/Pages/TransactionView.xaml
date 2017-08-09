@@ -20,7 +20,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="1" Grid.Column="1" Content="Dodaj transakcję" />
-        <Button Grid.Row="3" Grid.Column="1" Content="Dodaj wpłatę" />
+        <Button Grid.Row="1" Grid.Column="1" Content="Dodaj transakcję" Command="{Binding AddNewTransactionCommand}" />
+        <Button Grid.Row="3" Grid.Column="1" Content="Dodaj wpłatę" Command="{Binding AddNewDepositCommand}"/>
     </Grid>
 </UserControl>

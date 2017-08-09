@@ -70,6 +70,10 @@
     <Compile Include="Migrations\201708061412446_TransactionUpdate.Designer.cs">
       <DependentUpon>201708061412446_TransactionUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708091201059_TransactionsAddDesc.cs" />
+    <Compile Include="Migrations\201708091201059_TransactionsAddDesc.Designer.cs">
+      <DependentUpon>201708091201059_TransactionsAddDesc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Setting.cs" />
@@ -101,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708061412446_TransactionUpdate.resx">
       <DependentUpon>201708061412446_TransactionUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708091201059_TransactionsAddDesc.resx">
+      <DependentUpon>201708091201059_TransactionsAddDesc.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

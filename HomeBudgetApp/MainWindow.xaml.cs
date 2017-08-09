@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using HomeBudgetApp.Helpers;
 using System.ComponentModel;
+using LibHomeBudget.Operations;
 
 namespace HomeBudgetApp
 {
@@ -25,14 +26,42 @@ namespace HomeBudgetApp
     {
         public MainWindow()
         {
+            Initialized = false;
             CurrentUserMessage = "Zalogowano jako: " + Properties.Settings.Default.CurrentLoginUser;
             MWContainer.MW = this;
-            _badgeVisible = false;
+            var msgLog = UserOperations.GetLastMessageCreatorLogin();
+            var curLogMsg = UserOperations.DidUserReadMessage(Properties.Settings.Default.CurrentLoginUser);
+            if (!msgLog.Equals(Properties.Settings.Default.CurrentLoginUser) && !curLogMsg)
+            {
+                BadgeVisible = true;
+            }
+            else
+            {
+                BadgeVisible = false;
+            }
+
             InitializeComponent();
-            DataContext = this;            
+            DataContext = this;
+            Initialized = true;    
         }
 
-        public bool IsHamburgerMenuPaneOpen { get; set; }
+        public bool Initialized { get; set; } 
+
+        private bool _isHamburgerMenuPaneOpen;
+        public bool IsHamburgerMenuPaneOpen
+        {
+            get
+            {
+                return _isHamburgerMenuPaneOpen;
+            }
+            set
+            {
+                _isHamburgerMenuPaneOpen = value;
+                OnPropertyChanged("IsHamburgerMenuPaneOpen");
+            }
+        }
+
+        public MahApps.Metro.Controls.HamburgerMenuGlyphItem HMenuContent { get; set; }
 
         private string _CurrentUserMessage;
         public string CurrentUserMessage
@@ -48,27 +77,52 @@ namespace HomeBudgetApp
             }
         }
 
-        private void HamburgerMenu_OnItemClick(object sender, ItemClickEventArgs e)
+        private bool CanClickHMenu()
         {
-            // instead using binding Content="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay, Path=SelectedItem}"
-            // we can do this
-            var a = ((MahApps.Metro.Controls.HamburgerMenuGlyphItem)e.ClickedItem).Tag.GetType();
-            switch (a.Name)
+            return true;
+        }
+
+        public void ClickHMenu(object param)
+        {
+            //Options clicked
+            if (param.ToString().Equals("Options"))
             {
-                case "LimitView":
-                    ((MahApps.Metro.Controls.HamburgerMenuGlyphItem)e.ClickedItem).Tag = new HomeBudgetApp.Pages.LimitView();
+                HMenuContent.Tag = new HomeBudgetApp.Pages.MessageView();
+                IsHamburgerMenuPaneOpen = false;
+                return;
+            }
+            // Else menuItem clicked
+            var a = ((param as MahApps.Metro.Controls.HamburgerMenuGlyphItem).Glyph);
+            switch (a)
+            {
+                case "pieChart":
+                    HMenuContent.Tag = new HomeBudgetApp.Pages.SummaryView();
+                    break;
+                case "user":
+                    HMenuContent.Tag = new HomeBudgetApp.Pages.LoginView();
+                    break;
+                case "areaChart":
+                    HMenuContent.Tag = new HomeBudgetApp.Pages.HistoryView();
+                    break;
+                case "search":
+                    HMenuContent.Tag = new HomeBudgetApp.Pages.SearchView();
+                    break;
+                case "creditCard":
+                    HMenuContent.Tag = new HomeBudgetApp.Pages.LimitView();
+                    break;
+                case "users":
+                    HMenuContent.Tag = new HomeBudgetApp.Pages.UsersView();
+                    break;
+                case "plusSquare":
+                    HMenuContent.Tag = new HomeBudgetApp.Pages.TransactionView();
                     break;
                 default:
                     break;
-            }
-            this.HamburgerMenuControl.Content = e.ClickedItem;
-
-            // close the menu if a item was selected
-            if (this.HamburgerMenuControl.IsPaneOpen)
-            {
-                this.HamburgerMenuControl.IsPaneOpen = false;
-            }
+            }            
+            IsHamburgerMenuPaneOpen = false;
         }
+
+        public ICommand HMenuClick { get { return new RelayCommandP(p => ClickHMenu(p), CanClickHMenu); } }
 
         private bool _badgeVisible;
         public bool BadgeVisible

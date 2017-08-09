@@ -8,6 +8,7 @@
         xmlns:views="clr-namespace:HomeBudgetApp.Pages"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:myConverters="clr-namespace:HomeBudgetApp.Converters"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"                       
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="Home Budget" Height="700" Width="525" ShowIconOnTitleBar="True" Icon="/HomeBudgetApp;component/Resources/dollar.ico" >
@@ -84,15 +85,22 @@
 
     <Controls:HamburgerMenu x:Name="HamburgerMenuControl"
         HamburgerWidth="50"
-        IsPaneOpen="{Binding IsHamburgerMenuPaneOpen}"
-        ItemClick="HamburgerMenu_OnItemClick"
+        IsPaneOpen="{Binding IsHamburgerMenuPaneOpen, Mode=TwoWay}"
+        Content="{Binding HMenuContent, Mode=TwoWay}"
         ItemTemplate="{StaticResource HamburgerMenuImageItem}"
-        OptionsItemClick="HamburgerMenu_OnItemClick"
         OptionsItemTemplate="{StaticResource HamburgerMenuBadged}"
         SelectedIndex="0"
         VerticalScrollBarOnLeftSide="False"                                
         DisplayMode="CompactInline">
-
+        
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="ItemClick">
+                <i:InvokeCommandAction Command="{Binding Mode=OneWay, Path=HMenuClick}" CommandParameter="{Binding  ElementName=HamburgerMenuControl, Path=SelectedItem}"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="OptionsItemClick">
+                <i:InvokeCommandAction Command="{Binding Mode=OneWay, Path=HMenuClick}" CommandParameter="Options"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
         <!--  Items  -->
         <Controls:HamburgerMenu.ItemsSource>
             <Controls:HamburgerMenuItemCollection>

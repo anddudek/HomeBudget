@@ -81,6 +81,45 @@ namespace LibHomeBudget.Operations
                 return ctx.Users.Where(x => x.Login.ToUpper().Equals(_login.ToUpper())).First().Id;
             }
         }
+
+        public static string GetUserLogin(Guid _id)
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                return ctx.Users.Where(x => x.Id == _id).First().Login;
+            }
+        }
+
+        public static bool DidUserReadMessage(string _login)
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                var q = ctx.Users.Where(x => x.Login.ToUpper().Equals(_login.ToUpper()));
+                if (q.ToList().Count > 0)
+                {
+                    return q.First().HasSeenMessage;
+                }
+                return true; //user not found -> no new message
+            }
+        }
+
+        public static void UserReadMessage(string _login)
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                ctx.Users.Where(x => x.Login.ToUpper().Equals(_login.ToUpper())).First().HasSeenMessage = true;
+                ctx.SaveChanges();
+            }
+        }
+
+        public static string GetLastMessageCreatorLogin()
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                Guid uId = ctx.Settings.First().MessageCreatorId;
+                return GetUserLogin(uId);
+            }
+        }
     }
 
 }

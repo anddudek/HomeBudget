@@ -53,6 +53,7 @@ namespace LibHomeBudget.Operations
                     ctx.Settings.First().Message = _msg;
                     ctx.Settings.First().MessageCreatorId = logId;
                 }
+                ctx.Users.ToList().ForEach(x => x.HasSeenMessage = false);
                 ctx.SaveChanges();
             }
         }
@@ -67,5 +68,13 @@ namespace LibHomeBudget.Operations
                 return ctx.Settings.First().DailyLimit;
             }
         }
+
+        public static string GetMessage()
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                return ctx.Settings.First().Message;
+            }
+        }        
     }
 }

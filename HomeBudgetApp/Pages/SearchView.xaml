@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"            
              mc:Ignorable="d" 
              x:Name="SearchControl"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -12,9 +12,11 @@
             <ColumnDefinition Width="0.7*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="0.7*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -23,18 +25,23 @@
             <RowDefinition Height="8*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="0" Text="Kto:" VerticalAlignment="Center" Margin="15,0,0,0"/>
-        <ComboBox Grid.Column="1" Grid.ColumnSpan="3" Margin="0,5,5,5" Height="30"/>
+        <ComboBox Grid.Column="1" Grid.ColumnSpan="4" Margin="0,5,5,5" Height="30" ItemsSource="{Binding UserList}" SelectedItem="{Binding SelectedUser}"/>
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Kategoria:" VerticalAlignment="Center" Margin="15,0,0,0"/>
-        <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,5,5,5" Height="30"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,5,0,5" Height="30" ItemsSource="{Binding CategoryList}" SelectedItem="{Binding SelectedCategory}"/>
+        <Button Grid.Row="1" Grid.Column="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="5" Height="30" Command="{Binding ClearCategoryCommand}">
+            <Button.Content>
+                <fa:FontAwesome Icon="Close" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" />
+            </Button.Content>
+        </Button>
         <TextBlock Grid.Row="2" Grid.Column="0" Margin="15,0,0,0" Text="Kwota od:" VerticalAlignment="Center" />
-        <TextBox Grid.Row="2" Grid.Column="1" Margin="0,5,5,5" Height="30" VerticalContentAlignment="Center"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="0,5,5,5" Height="30" VerticalContentAlignment="Center" Text="{Binding AmountFrom}"/>
         <TextBlock Grid.Row="2" Grid.Column="2" Margin="15,0,0,0" Text="Kwota do:" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="2" Grid.Column="4" Margin="0,5,5,5" Height="30" VerticalContentAlignment="Center"/>
+        <TextBox Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="3" Margin="0,5,5,5" Height="30" VerticalContentAlignment="Center" Text="{Binding AmountTo}"/>
         <TextBlock Grid.Row="3" Grid.Column="0" Margin="15,0,0,0" Text="Data od:" VerticalAlignment="Center"/>
-        <DatePicker Grid.Row="3" Grid.Column="1" Margin="0,5,5,5" Height="30" VerticalContentAlignment="Center"/>
+        <DatePicker Grid.Row="3" Grid.Column="1" Margin="0,5,5,5" Height="30" VerticalContentAlignment="Center" SelectedDate="{Binding DateFrom}"/>
         <TextBlock Grid.Row="3" Grid.Column="2" Margin="15,0,0,0" Text="Data do:" VerticalAlignment="Center"/>
-        <DatePicker Grid.Row="3" Grid.Column="4" Margin="0,5,5,5" Height="30" VerticalContentAlignment="Center"/>
-        <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,5,0,5" VerticalContentAlignment="Center">
+        <DatePicker Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="3" Margin="0,5,5,5" Height="30" VerticalContentAlignment="Center" SelectedDate="{Binding DateTo}"/>
+        <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,5,0,5" VerticalContentAlignment="Center" Command="{Binding SearchCommand}">
             <Button.Content>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -47,6 +54,26 @@
                 </Grid>
             </Button.Content>
         </Button>
-        <ListView Grid.Row="5" Grid.ColumnSpan="4" />
+        <TextBlock Text="{Binding Error}" Grid.Row="5" Grid.ColumnSpan="5" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" Foreground="Red" />
+        <ListView Grid.Row="6" Grid.ColumnSpan="5" ItemsSource="{Binding TransactionsList}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="30,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding Name}" HorizontalAlignment="Left" />
+                        <TextBlock Grid.Column="1" Text="{Binding Amount}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Column="2" Text="{Binding Date}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Column="3" Text="{Binding Category}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Column="4" Text="{Binding Comment}" HorizontalAlignment="Center" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

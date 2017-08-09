@@ -90,14 +90,16 @@ namespace HomeBudgetApp.Pages
             {
                 CurrentLoggedUser = LoginBox;
                 OnPropertyChanged("CurrentLoggedUser");
-                if (MWContainer.LW != null)
+                var msgLog = UserOperations.GetLastMessageCreatorLogin();
+                var curLogMsg = UserOperations.DidUserReadMessage(Properties.Settings.Default.CurrentLoginUser);
+                if (!msgLog.Equals(Properties.Settings.Default.CurrentLoginUser) && !curLogMsg)
                 {
-                    MWContainer.LW.UpdateCommands();
+                    MWContainer.MW.BadgeVisible = true;
                 }
-                /*if (MWContainer.UsP != null)
+                else
                 {
-                    MWContainer.UsP.UpdateCommands();
-                }*/
+                    MWContainer.MW.BadgeVisible = false;
+                }
             }
             else
             {
@@ -120,14 +122,6 @@ namespace HomeBudgetApp.Pages
             {
                 CurrentLoggedUser = "LoggedOut";
                 OnPropertyChanged("CurrentLoggedUser"); 
-                if (MWContainer.LW != null)
-                {
-                    MWContainer.LW.UpdateCommands();
-                }
-                /*if (MWContainer.UsP != null)
-                {
-                    MWContainer.UsP.UpdateCommands();
-                }*/
             }
             else
             {

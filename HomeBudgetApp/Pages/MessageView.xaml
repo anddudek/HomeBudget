@@ -19,9 +19,9 @@
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <TextBox Grid.Row="1" Grid.ColumnSpan="2" />
-        <Button Grid.Row="2" Grid.Column="1" Content="Wyślij" Margin="0,5,0,5" MaxHeight="30"/>
+        <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Message}"/>
+        <Button Grid.Row="2" Grid.Column="1" Content="Wyślij" Margin="0,5,0,5" MaxHeight="30" Command="{Binding UpdateMessageCommand}"/>
         <TextBlock Grid.Row="3" Text="Ostatnia edycja:" VerticalAlignment="Center" />
-        <TextBlock Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding LastMessageCreatorID}" />
     </Grid>
 </UserControl>
