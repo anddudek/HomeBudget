@@ -83,7 +83,6 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\MWContainer.cs" />
     <Compile Include="Helpers\RelayCommandP.cs" />
-    <Compile Include="Helpers\TransactionItemSource.cs" />
     <Compile Include="Helpers\UserItemSource.cs" />
     <Compile Include="Wizards\AddNewDepositWizard.xaml.cs">
       <DependentUpon>AddNewDepositWizard.xaml</DependentUpon>

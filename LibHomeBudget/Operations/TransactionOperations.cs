@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibHomeBudget.Models;
+using LibHomeBudget.Helpers;
 
 namespace LibHomeBudget.Operations
 {
@@ -73,6 +74,31 @@ namespace LibHomeBudget.Operations
             }
         }
 
-        //public static double 
+        public static List<TransactionItemSource> GetTransactionSearchResults(string _name, string _category, double _amountFrom, double _amountFor, DateTime _dateFrom, DateTime _dateFor)
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                List<TransactionItemSource> retList = new List<TransactionItemSource>();
+                var q = ctx.Transactions.Where(x => x.Cost >= _amountFrom && x.Cost <= _amountFor && x.Date >= _dateFrom && x.Date <= _dateFrom).ToList();
+                    //.Join(ctx.Users, t => t.UserId, u => u.Id, (t, u) => new { t, u })
+                    //.Join(ctx.Categories, tt => tt.t.CategoryId, c => c.Id, (tt, c) => new { tt, c });
+                    //.Where(ttt => ttt.tt.u.Name.ToUpper().Equals(_name.ToUpper()) && ttt.c.Name.ToUpper().Equals(_category.ToUpper()))
+                    //.ToList();
+                if (_name != null)
+                {
+                    //q = q.Where(ttt => ttt.tt.u.Name.ToUpper().Equals(_name.ToUpper()));
+                }
+                if (_category != null)
+                {
+                   // q = q.Where(ttt => ttt.c.Name.ToUpper().Equals(_category.ToUpper()));
+                }
+                var qq = q.ToList();
+                foreach (var i in qq)
+                {
+                    //retList.Add(new TransactionItemSource() { Name = i.tt.u.Name, Amount = i.tt.t.Cost.ToString() + " zł", Category = i.c.Name, Comment = i.tt.t.Description, Date = i.tt.t.Date.Date.ToString() });
+                }
+                return retList;
+            }
+        }
     }
 }

@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.ComponentModel;
 using LibHomeBudget.Operations;
 using HomeBudgetApp.Helpers;
+using LibHomeBudget.Helpers;
+using System.Globalization;
 
 namespace HomeBudgetApp.Pages
 {
@@ -83,12 +85,18 @@ namespace HomeBudgetApp.Pages
 
         public DateTime DateTo { get; set; }
 
+        private List<TransactionItemSource> _transactionsList;
         public List<TransactionItemSource> TransactionsList 
         { 
             get 
             {
-                return null;
-            } 
+                return _transactionsList;
+            }
+            set
+            {
+                _transactionsList = value;
+                OnPropertyChanged("TransactionsList");
+            }
         }
 
         private bool CanClearCategory()
@@ -108,7 +116,24 @@ namespace HomeBudgetApp.Pages
 
         private void Search()
         {
-            SelectedCategory = null;
+            double amFrom;
+            double amTo;
+            if (AmountFrom == null || !double.TryParse(AmountFrom.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out amFrom))
+            {
+                Error = "Wprowadź poprawną kwotę od";
+                return;
+            }
+            if (AmountTo == null || !double.TryParse(AmountTo.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out amTo))
+            {
+                Error = "Wprowadź poprawną kwotę do";
+                return;
+            }
+            if (DateFrom > DateTo)
+            {
+                Error = "Data do powinna być dalsza";
+                return;
+            }
+            TransactionsList = TransactionOperations.GetTransactionSearchResults(SelectedUser, SelectedCategory, amFrom, amTo, DateFrom, DateTo);
         }
 
         public ICommand ClearCategoryCommand { get { return new RelayCommand(ClearCategory, CanClearCategory); } }
