@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.ComponentModel;
 using HomeBudgetApp.Helpers;
 using LibHomeBudget.Operations;
+using LibHomeBudget.Helpers;
 
 namespace HomeBudgetApp.Pages
 {
@@ -24,19 +25,22 @@ namespace HomeBudgetApp.Pages
     public partial class SummaryView : UserControl, INotifyPropertyChanged
     {
         public SummaryView()
-        {
+        {          
             InitializeComponent();
             this.DataContext = this;
         }
 
         private void UpdateDisplay()
         {
+            // query db
             double lim = SettingOperations.GetDailyLimit();
             double poll = TransactionOperations.GetMonthlyPollLeft();
+            List<UserPayment> users = TransactionOperations.GetAllUsersPayments();
         }
 
         public bool LoadingState { get; set; }
 
+        private double _percentageValue;
         public double PercentageValue
         {
             get
@@ -52,6 +56,7 @@ namespace HomeBudgetApp.Pages
             }
         }
 
+        private string _monthlyLimit;
         public string MonthlyLimit
         {
             get
@@ -60,6 +65,7 @@ namespace HomeBudgetApp.Pages
             }
         }
 
+        private string _monthsPollLeft;
         public string MonthsPollLeft
         {
             get
@@ -68,6 +74,7 @@ namespace HomeBudgetApp.Pages
             }
         }
 
+        private string _todayPaymentLeft;
         public string TodayPaymentLeft
         {
             get
@@ -84,6 +91,7 @@ namespace HomeBudgetApp.Pages
             }
         }
 
+        private string _todayPaymentSum;
         public string TodayPaymentSum
         {
             get
@@ -98,6 +106,7 @@ namespace HomeBudgetApp.Pages
             }
         }
 
+        private List<UserItemSource> todaysPayments;
         public List<UserItemSource> TodaysPayments
         {
             get
@@ -115,6 +124,7 @@ namespace HomeBudgetApp.Pages
             }
         }
 
+        private string _progressText;
         public string ProgressText
         {
             get

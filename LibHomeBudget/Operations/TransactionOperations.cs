@@ -62,10 +62,13 @@ namespace LibHomeBudget.Operations
             using (var ctx = new Context.DatabaseContext())
             {
                 Guid depoId = GetDepositCatGuid();
-                //Guid uId = UserOperations.GetUserGuid(_name);
-                var q = ctx.Transactions.Where(x => x.CategoryId != depoId && x.Date.Date == DateTime.Today.Date);
-                //return q.Sum(x => x.Cost);
-                return null;
+                DateTime tod = DateTime.Today.Date;
+                var q = ctx.Transactions.Where(x => x.CategoryId != depoId && x.Date == tod)
+                    .GroupBy(x => x.UserId)
+                    .Select(x => new { Name = x.Key, Payments = x.Sum(xx => xx.Cost) })
+                    .Join(ctx.Users, t => t.Name, u => u.Id, (t, u) => new { t, u })
+                    .Select(e => new UserPayment() { Name = e.u.Name, Payments = e.t.Payments }).ToList();
+                return q;
             }
         }
 
