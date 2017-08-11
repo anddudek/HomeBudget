@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Helpers\TransactionItemSource.cs" />
+    <Compile Include="Helpers\UserPayment.cs" />
     <Compile Include="InitializeDB.cs" />
     <Compile Include="Migrations\201708051547404_InitMigration.cs" />
     <Compile Include="Migrations\201708051547404_InitMigration.Designer.cs">

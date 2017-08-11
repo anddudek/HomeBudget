@@ -25,16 +25,14 @@ namespace HomeBudgetApp.Pages
     {
         public SummaryView()
         {
-            UpdateDisplay();
             InitializeComponent();
             this.DataContext = this;
-            LoadingState = false;
         }
 
         private void UpdateDisplay()
         {
-            LoadingState = true ;
-            OnPropertyChanged("");            
+            double lim = SettingOperations.GetDailyLimit();
+            double poll = TransactionOperations.GetMonthlyPollLeft();
         }
 
         public bool LoadingState { get; set; }

@@ -56,7 +56,17 @@ namespace HomeBudgetApp.Pages
             }
         }
 
-        public string SelectedUser { get; set; }
+        private string _selectedUser;
+        public string SelectedUser
+        {
+            get { return _selectedUser; }
+            set
+            {
+                _selectedUser = value;
+                OnPropertyChanged("SelectedUser");
+            }
+        }
+        
 
         public List<string> CategoryList
         {
@@ -109,6 +119,16 @@ namespace HomeBudgetApp.Pages
             SelectedCategory = null;
         }
 
+        private bool CanClearName()
+        {
+            return true;
+        }
+
+        private void ClearName()
+        {
+            SelectedUser = null;
+        }
+
         private bool CanSearch()
         {
             return true;
@@ -137,6 +157,8 @@ namespace HomeBudgetApp.Pages
         }
 
         public ICommand ClearCategoryCommand { get { return new RelayCommand(ClearCategory, CanClearCategory); } }
+
+        public ICommand ClearNameCommand { get { return new RelayCommand(ClearName, CanClearName); } }
 
         public ICommand SearchCommand { get { return new RelayCommand(Search, CanSearch); } }
 

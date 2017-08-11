@@ -57,6 +57,18 @@ namespace LibHomeBudget.Operations
             }
         }
 
+        public static List<UserPayment> GetAllUsersPayments()
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                Guid depoId = GetDepositCatGuid();
+                //Guid uId = UserOperations.GetUserGuid(_name);
+                var q = ctx.Transactions.Where(x => x.CategoryId != depoId && x.Date.Date == DateTime.Today.Date);
+                //return q.Sum(x => x.Cost);
+                return null;
+            }
+        }
+
         public static Guid GetDepositCatGuid()
         {
             return new Guid("C041805D-5CEA-4043-B349-554ABB638EA4");
@@ -79,23 +91,23 @@ namespace LibHomeBudget.Operations
             using (var ctx = new Context.DatabaseContext())
             {
                 List<TransactionItemSource> retList = new List<TransactionItemSource>();
-                var q = ctx.Transactions.Where(x => x.Cost >= _amountFrom && x.Cost <= _amountFor && x.Date >= _dateFrom && x.Date <= _dateFrom).ToList();
-                    //.Join(ctx.Users, t => t.UserId, u => u.Id, (t, u) => new { t, u })
-                    //.Join(ctx.Categories, tt => tt.t.CategoryId, c => c.Id, (tt, c) => new { tt, c });
+                var q = ctx.Transactions.Where(x => x.Cost >= _amountFrom && x.Cost <= _amountFor && x.Date >= _dateFrom && x.Date <= _dateFor).ToList()
+                    .Join(ctx.Users, t => t.UserId, u => u.Id, (t, u) => new { t, u })
+                    .Join(ctx.Categories, tt => tt.t.CategoryId, c => c.Id, (tt, c) => new { tt, c });
                     //.Where(ttt => ttt.tt.u.Name.ToUpper().Equals(_name.ToUpper()) && ttt.c.Name.ToUpper().Equals(_category.ToUpper()))
                     //.ToList();
                 if (_name != null)
                 {
-                    //q = q.Where(ttt => ttt.tt.u.Name.ToUpper().Equals(_name.ToUpper()));
+                    q = q.Where(ttt => ttt.tt.u.Name.ToUpper().Equals(_name.ToUpper()));
                 }
                 if (_category != null)
                 {
-                   // q = q.Where(ttt => ttt.c.Name.ToUpper().Equals(_category.ToUpper()));
+                    q = q.Where(ttt => ttt.c.Name.ToUpper().Equals(_category.ToUpper()));
                 }
                 var qq = q.ToList();
                 foreach (var i in qq)
                 {
-                    //retList.Add(new TransactionItemSource() { Name = i.tt.u.Name, Amount = i.tt.t.Cost.ToString() + " zł", Category = i.c.Name, Comment = i.tt.t.Description, Date = i.tt.t.Date.Date.ToString() });
+                    retList.Add(new TransactionItemSource() { Name = i.tt.u.Name, Amount = i.tt.t.Cost.ToString() + " zł", Category = i.c.Name, Comment = i.tt.t.Description, Date = i.tt.t.Date.Date.ToString("dd/MM/yyyy") });
                 }
                 return retList;
             }
