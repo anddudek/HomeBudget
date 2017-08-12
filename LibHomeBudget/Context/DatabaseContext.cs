@@ -11,7 +11,7 @@ namespace LibHomeBudget.Context
 {
     public class DatabaseContext : DbContext
     {
-        public DatabaseContext() : base("Data Source=mssql6.gear.host;Initial Catalog=homebudgetapp;User ID=homebudgetapp;Password=Xy2DSX8_UL5!") { }
+        public DatabaseContext() : base("ConnectionString") { }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Setting> Settings { get; set; }
