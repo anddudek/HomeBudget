@@ -16,6 +16,7 @@ using System.ComponentModel;
 using OxyPlot;
 using OxyPlot.Series;
 using HomeBudgetApp.Helpers;
+using LibHomeBudget.Operations;
 
 namespace HomeBudgetApp.Pages
 {
@@ -33,20 +34,22 @@ namespace HomeBudgetApp.Pages
 
         private void UpdateDisplay()
         {
-            _monthsPollLeft = 20;
-            _lastMonthPaymentSum = 15;
+            double lim = SettingOperations.GetDailyLimit();
+            _monthsPollLeft = TransactionOperations.GetMonthlyPollLeft();
+            _lastMonthPaymentSum = TransactionOperations.GetLastMonthPaymentsSum();
             _columnModel = new PlotModel { Title = "Historia transakcji" };
             ColumnSeries series = new ColumnSeries();
             _columnModel.Series.Add(series);
-            for (int i = 0; i < 7; i++)
+            var sumArray = TransactionOperations.GetLastWeekTransactionsSum();
+            for (int i = 0; i < sumArray.Length; i++)
             {
-                series.Items.Add(new ColumnItem(27 + i));
+                series.Items.Add(new ColumnItem(sumArray[i]));
             }
-            series.Items.Where(x => x.Value > 30).ToList().ForEach(x => x.Color = OxyColor.FromRgb(255, 0, 0));
+            series.Items.Where(x => x.Value > lim).ToList().ForEach(x => x.Color = OxyColor.FromRgb(255, 0, 0));
             LineSeries lineSeries = new LineSeries();
             _columnModel.Series.Add(lineSeries);
-            lineSeries.Points.Add(new DataPoint(0, 30));
-            lineSeries.Points.Add(new DataPoint(6, 30));
+            lineSeries.Points.Add(new DataPoint(0, lim));
+            lineSeries.Points.Add(new DataPoint(6, lim));
             MyLinearAxis XAxis = new MyLinearAxis();
             XAxis.Position = OxyPlot.Axes.AxisPosition.Bottom;
             _columnModel.Axes.Add(XAxis);

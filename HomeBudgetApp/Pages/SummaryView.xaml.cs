@@ -25,7 +25,8 @@ namespace HomeBudgetApp.Pages
     public partial class SummaryView : UserControl, INotifyPropertyChanged
     {
         public SummaryView()
-        {          
+        {
+            UpdateDisplay();
             InitializeComponent();
             this.DataContext = this;
         }
@@ -36,6 +37,14 @@ namespace HomeBudgetApp.Pages
             double lim = SettingOperations.GetDailyLimit();
             double poll = TransactionOperations.GetMonthlyPollLeft();
             List<UserPayment> users = TransactionOperations.GetAllUsersPayments();
+            double todayPayments = users.Sum(x => x.Payments);
+            PercentageValue = (todayPayments / lim ) * 100;
+            MonthlyLimit = lim.ToString() + " zł";
+            MonthsPollLeft = poll.ToString() + " zł";
+            TodayPaymentLeft = (lim - todayPayments).ToString() + " zł";
+            TodayPaymentSum = todayPayments.ToString() + " zł";
+            TodaysPayments = users;
+            ProgressText = (lim - todayPayments).ToString() + " zł";
         }
 
         public bool LoadingState { get; set; }
@@ -45,14 +54,12 @@ namespace HomeBudgetApp.Pages
         {
             get
             {
-                double lim = SettingOperations.GetDailyLimit();
-                double sum = 0;
-                var users = UserOperations.GetAllUsersList();
-                foreach (var u in users)
-                {
-                    sum += TransactionOperations.GetUserTodayPayments(u);
-                }
-                return (sum / lim) * 100;       
+                return _percentageValue;  
+            }
+            set
+            {
+                _percentageValue = value;
+                OnPropertyChanged("PercentageValue");
             }
         }
 
@@ -61,7 +68,12 @@ namespace HomeBudgetApp.Pages
         {
             get
             {
-                return SettingOperations.GetDailyLimit().ToString() + " zł";
+                return _monthlyLimit;
+            }
+            set
+            {
+                _monthlyLimit = value;
+                OnPropertyChanged("MonthlyLimit");
             }
         }
 
@@ -70,7 +82,12 @@ namespace HomeBudgetApp.Pages
         {
             get
             {
-                return TransactionOperations.GetMonthlyPollLeft().ToString() + " zł";
+                return _monthsPollLeft;
+            }
+            set
+            {
+                _monthsPollLeft = value;
+                OnPropertyChanged("MonthsPollLeft");
             }
         }
 
@@ -79,15 +96,12 @@ namespace HomeBudgetApp.Pages
         {
             get
             {
-                double lim = SettingOperations.GetDailyLimit();
-                double sum = 0;
-                var users = UserOperations.GetAllUsersList();
-                foreach (var u in users)
-                {
-                    sum += TransactionOperations.GetUserTodayPayments(u);
-                }
-                LoadingState = false;
-                return (lim - sum).ToString() + " zł";
+                return _todayPaymentLeft;
+            }
+            set
+            {
+                _todayPaymentLeft = value;
+                OnPropertyChanged("TodayPaymentLeft");
             }
         }
 
@@ -96,31 +110,26 @@ namespace HomeBudgetApp.Pages
         {
             get
             {
-                double sum = 0;
-                var users = UserOperations.GetAllUsersList();
-                foreach (var u in users)
-                {
-                    sum += TransactionOperations.GetUserTodayPayments(u);
-                }
-                return sum.ToString() + " zł";
+                return _todayPaymentSum;
+            }
+            set
+            {
+                _todayPaymentSum = value;
+                OnPropertyChanged("TodayPaymentSum");
             }
         }
 
-        private List<UserItemSource> todaysPayments;
-        public List<UserItemSource> TodaysPayments
+        private List<UserPayment> todaysPayments;
+        public List<UserPayment> TodaysPayments
         {
             get
             {
-                List<UserItemSource> uList = new List<UserItemSource>();
-                var users = UserOperations.GetAllUsersList();
-                foreach (var u in users)
-                {
-                    var uis = new UserItemSource();
-                    uis.Amount = TransactionOperations.GetUserTodayPayments(u).ToString() + " zł";
-                    uis.Name = u;
-                    uList.Add(uis);
-                }
-                return uList;
+                return todaysPayments;
+            }
+            set
+            {
+                todaysPayments = value;
+                OnPropertyChanged("TodaysPayments");
             }
         }
 
@@ -129,14 +138,12 @@ namespace HomeBudgetApp.Pages
         {
             get
             {
-                double lim = SettingOperations.GetDailyLimit();
-                double sum = 0;
-                var users = UserOperations.GetAllUsersList();
-                foreach (var u in users)
-                {
-                    sum += TransactionOperations.GetUserTodayPayments(u);
-                }
-                return (lim - sum).ToString() + " zł";
+                return _progressText;
+            }
+            set
+            {
+                _progressText = value;
+                OnPropertyChanged("ProgressText");
             }
         }
 

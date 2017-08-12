@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LibHomeBudget.Models;
 using LibHomeBudget.Helpers;
+using System.Data.Entity;
 
 namespace LibHomeBudget.Operations
 {
@@ -113,6 +114,32 @@ namespace LibHomeBudget.Operations
                     retList.Add(new TransactionItemSource() { Name = i.tt.u.Name, Amount = i.tt.t.Cost.ToString() + " zł", Category = i.c.Name, Comment = i.tt.t.Description, Date = i.tt.t.Date.Date.ToString("dd/MM/yyyy") });
                 }
                 return retList;
+            }
+        }
+
+        public static double GetLastMonthPaymentsSum()
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                var currMonth = DateTime.Today.AddMonths(-1).Month;
+                return ctx.Transactions.Where(x => x.Date.Month == currMonth).Select(x => x.Cost).DefaultIfEmpty(0).Sum();
+            }
+        }
+
+        public static double[] GetLastWeekTransactionsSum()
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                var lastWeek = DateTime.Today.AddDays(-7).Date;
+                var tList = ctx.Transactions;
+                double[] retArray = new double[7];
+                for (int i = 0; i < retArray.Length; i++)
+                {
+                    var date = lastWeek.AddDays(i).Date;
+                    retArray[i] = tList.Where(x => DbFunctions.TruncateTime(x.Date) == date).Select(x => x.Cost).DefaultIfEmpty(0).Sum();
+                }
+                return retArray;
+                    //ctx.Transactions.Where(x => x.Date >= lastWeek).GroupBy(x => x.Date).OrderBy(x => x.Key).Select(t =>  t.Sum(x => x.Cost) ).ToArray();
             }
         }
     }

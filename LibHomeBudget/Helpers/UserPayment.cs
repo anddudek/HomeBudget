@@ -8,7 +8,7 @@ namespace LibHomeBudget.Helpers
 {
     public class UserPayment
     {
-        public string Name;
-        public double Payments;
+        public string Name { get; set; }
+        public double Payments { get; set; }
     }
 }
