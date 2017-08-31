@@ -45,5 +45,15 @@ namespace LibHomeBudget
                 }
             }
         }
+
+        public static void InitializeDL()
+        {
+            using (var ctx = new DatabaseContext())
+            {
+                ctx.Settings.First().AmountToSpend = 800;
+                ctx.Settings.First().LimitLastTimeSet = DateTime.Today.AddMonths(-1);
+                ctx.SaveChanges();
+            }
+        }
     }
 }

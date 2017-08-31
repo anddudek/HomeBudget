@@ -12,5 +12,7 @@ namespace LibHomeBudget.Models
         public double DailyLimit { get; set; }
         public string Message { get; set; }
         public Guid MessageCreatorId { get; set; }
+        public DateTime LimitLastTimeSet { get; set; }
+        public double AmountToSpend { get; set; }
     }
 }

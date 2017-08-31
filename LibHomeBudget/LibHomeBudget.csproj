@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\DatabaseContext.cs" />
+    <Compile Include="Helpers\ShowDialog.cs" />
     <Compile Include="Helpers\TransactionItemSource.cs" />
     <Compile Include="Helpers\UserPayment.cs" />
     <Compile Include="InitializeDB.cs" />
@@ -75,6 +76,10 @@
     <Compile Include="Migrations\201708091201059_TransactionsAddDesc.cs" />
     <Compile Include="Migrations\201708091201059_TransactionsAddDesc.Designer.cs">
       <DependentUpon>201708091201059_TransactionsAddDesc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708131916002_ExpandSettings.cs" />
+    <Compile Include="Migrations\201708131916002_ExpandSettings.Designer.cs">
+      <DependentUpon>201708131916002_ExpandSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
@@ -110,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708091201059_TransactionsAddDesc.resx">
       <DependentUpon>201708091201059_TransactionsAddDesc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708131916002_ExpandSettings.resx">
+      <DependentUpon>201708131916002_ExpandSettings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

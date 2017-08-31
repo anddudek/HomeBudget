@@ -76,5 +76,14 @@ namespace LibHomeBudget.Operations
                 return ctx.Settings.First().Message;
             }
         }        
+
+        public static void EnterAmountToSpend(double amount)
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                ctx.Settings.First().AmountToSpend = amount;
+                ctx.SaveChanges();
+            }
+        }
     }
 }

@@ -103,13 +103,9 @@ namespace HomeBudgetApp.Pages
             double _amount;
             if (double.TryParse(AmountToSpent, out _amount))
             {
-                _newLimit = Math.Floor(_amount / NumberOfDays);
-                MessageBoxResult result = MessageBox.Show(String.Format("Czy chcesz zmienić limit z {0} na {1} ?", DailyLimit, _newLimit), "Zmiana limitu", MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.Yes)
-                {
-                    SettingOperations.SetLimit(_newLimit);
-                    OnPropertyChanged("DailyLimit");
-                }
+                SettingOperations.EnterAmountToSpend(_amount);
+                TransactionOperations.CalculateAutoLimit();
+                OnPropertyChanged("DailyLimit");                
             }
         }
 

@@ -133,13 +133,32 @@ namespace LibHomeBudget.Operations
                 var lastWeek = DateTime.Today.AddDays(-7).Date;
                 var tList = ctx.Transactions;
                 double[] retArray = new double[7];
+                var depo = GetDepositCatGuid();
                 for (int i = 0; i < retArray.Length; i++)
                 {
                     var date = lastWeek.AddDays(i).Date;
-                    retArray[i] = tList.Where(x => DbFunctions.TruncateTime(x.Date) == date).Select(x => x.Cost).DefaultIfEmpty(0).Sum();
+                    retArray[i] = tList.Where(x => DbFunctions.TruncateTime(x.Date) == date && x.CategoryId!=depo).Select(x => x.Cost).DefaultIfEmpty(0).Sum();
                 }
                 return retArray;
                     //ctx.Transactions.Where(x => x.Date >= lastWeek).GroupBy(x => x.Date).OrderBy(x => x.Key).Select(t =>  t.Sum(x => x.Cost) ).ToArray();
+            }
+        }
+
+        public static void CalculateAutoLimit()
+        {
+            using (var ctx = new Context.DatabaseContext())
+            {
+                var limitDate = ctx.Settings.Find().LimitLastTimeSet;
+                if (limitDate.Date == DateTime.Today.Date)
+                {
+                    return;
+                }
+                var depo = GetDepositCatGuid();
+                var today = DateTime.Today;
+                var amountLeft = ctx.Settings.Find().AmountToSpend;
+                var daysLeft = DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month) - DateTime.Today.Day + 1;
+                var thisMonth = ctx.Transactions.Where(x => x.CategoryId != depo && x.Date.Month == today.Month).Select(x => x.Cost).DefaultIfEmpty(0).Sum();
+                ctx.Settings.First().DailyLimit = (amountLeft - thisMonth) / daysLeft;
             }
         }
     }

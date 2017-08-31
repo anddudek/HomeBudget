@@ -43,7 +43,8 @@ namespace AppInitializeDb
             //TransactionOperations.AddNewTransaction(DateTime.Now, 45, TransactionOperations.GetCategoryGuid(TransactionOperations.GetCategoriesList().First()), UserOperations.GetUserGuid("Klaudia"));
             //TransactionOperations.AddNewTransaction(DateTime.Now.AddDays(-1), 5, TransactionOperations.GetCategoryGuid(TransactionOperations.GetCategoriesList().First()), UserOperations.GetUserGuid("Andrzej"));
             //TransactionOperations.AddNewTransaction(DateTime.Now.AddDays(-1), 45, TransactionOperations.GetCategoryGuid(TransactionOperations.GetCategoriesList().First()), UserOperations.GetUserGuid("Klaudia"));
-            Console.WriteLine(TransactionOperations.GetUserTodayPayments("Andrzej").ToString());
+            //Console.WriteLine(TransactionOperations.GetUserTodayPayments("Andrzej").ToString());
+            LibHomeBudget.InitializeDB.InitializeDL();
             Console.ReadKey();
         }
     }

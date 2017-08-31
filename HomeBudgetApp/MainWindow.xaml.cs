@@ -26,6 +26,7 @@ namespace HomeBudgetApp
     {
         public MainWindow()
         {
+            TransactionOperations.CalculateAutoLimit();
             Initialized = false;
             CurrentUserMessage = "Zalogowano jako: " + Properties.Settings.Default.CurrentLoginUser;
             MWContainer.MW = this;
