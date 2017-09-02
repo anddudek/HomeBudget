@@ -5,6 +5,8 @@ using GalaSoft.MvvmLight;
 using HomeBudgetMobile.Data;
 using Xamarin.Forms;
 using HomeBudgetMobile.Helpers;
+using OxyPlot;
+using OxyPlot.Series;
 using System.Linq;
 
 namespace HomeBudgetMobile.ViewModel.Pages
@@ -14,7 +16,7 @@ namespace HomeBudgetMobile.ViewModel.Pages
         private double _monthlyLimit;
         public double MonthlyLimit
         {
-            get { return _monthlyLimit; }
+            get { return Math.Round(_monthlyLimit, 2); }
             set { Set(() => MonthlyLimit, ref _monthlyLimit, value); }
         }
 
@@ -28,34 +30,54 @@ namespace HomeBudgetMobile.ViewModel.Pages
         private double _todayPaymentSum;
         public double TodaysPaymentSum
         {
-            get { return _todayPaymentSum; }
+            get { return Math.Round(_todayPaymentSum, 2); }
             set { Set(() => TodaysPaymentSum, ref _todayPaymentSum, value); }
         }
 
         private double _monthsPollLeft;
         public double MonthsPollLeft
         {
-            get { return _monthsPollLeft; }
+            get { return Math.Round(_monthsPollLeft, 2); }
             set { Set(() => MonthsPollLeft, ref _monthsPollLeft, value); }
         }
 
         private double _todayPaymentLeft;
         public double TodayPaymentLeft
         {
-            get { return _todayPaymentLeft; }
+            get { return Math.Round(_todayPaymentLeft,2); }
             set { Set(() => TodayPaymentLeft, ref _todayPaymentLeft, value); }
+        }
+
+        public PlotModel _donutChart;
+        public PlotModel DonutChart
+        {
+            get { return _donutChart; }
+            set { Set(() => DonutChart, ref _donutChart, value); }
         }
 
         public SummaryPageViewModel()
         {
+            RefreshPage();
+        }
+
+        private void RefreshPage()
+        {
             _monthlyLimit = SummaryDataOperator.GetDailyLimit();
             _todaysPayments = SummaryDataOperator.GetTransactionSum(DateTime.Today);
             _monthsPollLeft = SummaryDataOperator.GetAdditionalPool();
+            double todaySum = 0;
             foreach (var u in _todaysPayments)
             {
-                _todayPaymentLeft += u.Sum;
+                todaySum += u.Sum;
             }
-            _todayPaymentLeft = _monthlyLimit - _todayPaymentLeft;            
+            _todayPaymentLeft = _monthlyLimit - todaySum;
+
+            var data = SummaryDataOperator.GetLastWeekTransactionsSum();
+            _donutChart = new PlotModel();
+            var seriesP1 = new PieSeries { StrokeThickness = 2.0, InsideLabelPosition = 0.5, AngleSpan = 360, StartAngle = 0, InnerDiameter = 0.8, OutsideLabelFormat = "", TickHorizontalLength = 0, TickRadialLength = 0 };
+            seriesP1.Slices.Add(new PieSlice("", _monthlyLimit) { IsExploded = false, Fill = OxyColors.Transparent });
+            seriesP1.Slices.Add(new PieSlice("", todaySum) { IsExploded = false, Fill = OxyColors.Green });
+            _donutChart.Series.Add(seriesP1);
         }
     }
 }

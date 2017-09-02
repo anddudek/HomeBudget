@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using OxyPlot;
 
 namespace HomeBudgetMobile.Droid
 {
@@ -20,8 +21,9 @@ namespace HomeBudgetMobile.Droid
 			base.OnCreate (bundle);
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
-			LoadApplication (new HomeBudgetMobile.App ());
-            
+            OxyPlot.Xamarin.Forms.Platform.Android.PlotViewRenderer.Init();
+            LoadApplication (new HomeBudgetMobile.App ());
+
 		}
 	}
 }

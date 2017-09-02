@@ -122,7 +122,14 @@ namespace HomeBudgetMobile.Data
                         DateTime dateTo = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month));
                         cmd2.Parameters.Add("@dateFrom", System.Data.SqlDbType.DateTime).Value = dateFrom;
                         cmd2.Parameters.Add("@dateTo", System.Data.SqlDbType.DateTime).Value = dateTo;
-                        amountSpent = (double)cmd2.ExecuteScalar();
+                        try
+                        {
+                            amountSpent = (double)cmd2.ExecuteScalar();
+                        }
+                        catch (System.InvalidCastException)
+                        {
+                            amountSpent = 0;
+                        }                       
                     }
                     limit = daysLeft == 0 ? amount - amountSpent : (amount - amountSpent) / daysLeft;
                     limit = limit <= 0 ? 0 : limit;
@@ -152,7 +159,14 @@ namespace HomeBudgetMobile.Data
                     DateTime dateTo = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month));
                     cmd.Parameters.Add("@dateFrom", System.Data.SqlDbType.DateTime).Value = dateFrom;
                     cmd.Parameters.Add("@dateTo", System.Data.SqlDbType.DateTime).Value = dateTo;
-                    additionalPool = (double)cmd.ExecuteScalar();
+                    try
+                    {
+                        additionalPool = (double)cmd.ExecuteScalar();
+                    }
+                    catch (System.InvalidCastException)
+                    {
+                        additionalPool = 0;
+                    }
                 }
             }
             return additionalPool;
@@ -291,6 +305,34 @@ namespace HomeBudgetMobile.Data
                     }
                 }
             }
+        }
+
+        public static double GetLastMonthSpendings()
+        {
+            string query = "SELECT SUM(Cost) FROM Transactions WHERE Date >= @dateFrom AND Date <= @dateTo AND CategoryId = 'C041805D-5CEA-4043-B349-554ABB638EA4'";
+            double lastMonthSpendings = 0;
+
+            using (SqlConnection con = new SqlConnection(sqlConnectionString))
+            {
+                con.Open();
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    DateTime dateFrom = new DateTime(DateTime.Today.Year, DateTime.Today.AddMonths(-1).Month, 1);
+                    DateTime dateTo = new DateTime(DateTime.Today.Year, DateTime.Today.AddMonths(-1).Month, DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.AddMonths(-1).Month));
+                    cmd.Parameters.Add("@dateFrom", System.Data.SqlDbType.DateTime).Value = dateFrom;
+                    cmd.Parameters.Add("@dateTo", System.Data.SqlDbType.DateTime).Value = dateTo;
+                    try
+                    {
+                        lastMonthSpendings = (double)cmd.ExecuteScalar();
+                    }
+                    catch (System.InvalidCastException)
+                    {
+                        lastMonthSpendings = 0;
+                    }
+                }
+            }
+            return lastMonthSpendings;
         }
     }
 }

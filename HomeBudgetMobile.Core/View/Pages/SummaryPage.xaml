@@ -1,13 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:oxy="clr-namespace:OxyPlot.Xamarin.Forms;assembly=OxyPlot.Xamarin.Forms"
              x:Class="HomeBudgetMobile.View.Pages.SummaryPage">
     <ContentPage.Content>
         <Grid Margin="10,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
+                <RowDefinition Height="5*" />
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="3*" />
+                <RowDefinition Height="1.5*" />                
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
@@ -19,8 +21,8 @@
             </Grid.ColumnDefinitions>
             <Label FontSize="Medium"  Text="Dzienny limit:" Grid.Row="0"  Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"   />
             <Label FontSize="Medium" Text="{Binding MonthlyLimit}" Grid.Row="0"  Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"  />
-            <Label FontSize="Medium" Text="Dzisiejsze wydatki:" Grid.Row="1"  Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
-            <ListView ItemsSource="{Binding TodaysPayments}" Grid.Row="2" Grid.ColumnSpan="2" BackgroundColor="Transparent" HasUnevenRows="True">
+            <Label FontSize="Medium" Text="Dzisiejsze wydatki:" Grid.Row="2"  Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
+            <ListView ItemsSource="{Binding TodaysPayments}" Grid.Row="3" Grid.ColumnSpan="2" BackgroundColor="Transparent" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -38,12 +40,15 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Label FontSize="Medium" Text="Suma:" Grid.Row="3"  Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"  />
-            <Label FontSize="Medium" Text="{Binding TodayPaymentSum}" Grid.Row="3"  Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-            <Label FontSize="Medium" Text="Dodatkowa pula miesięczna:" Grid.Row="4"  Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"  />
-            <Label FontSize="Medium" Text="{Binding MonthsPollLeft}" Grid.Row="4"  Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-            <Label FontSize="Large" Text="Pozostało dziś:" Grid.Row="5"  Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" FontAttributes="Bold" />
-            <Label FontSize="Large" Text="{Binding TodayPaymentLeft}" Grid.Row="5"  Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  FontAttributes="Bold" TextColor="Green"/>
+            <Label FontSize="Medium" Text="Suma:" Grid.Row="4"  Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"  />
+            <Label FontSize="Medium" Text="{Binding TodayPaymentSum}" Grid.Row="4"  Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
+            <Label FontSize="Medium" Text="Dodatkowa pula miesięczna:" Grid.Row="5"  Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"  />
+            <Label FontSize="Medium" Text="{Binding MonthsPollLeft}" Grid.Row="5"  Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
+            <Label FontSize="Large" Text="Pozostało dziś:" Grid.Row="6"  Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" FontAttributes="Bold" />
+            <Label FontSize="Large" Text="{Binding TodayPaymentLeft}" Grid.Row="6"  Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  FontAttributes="Bold" TextColor="Green"/>
+            <oxy:PlotView Model="{Binding DonutChart}" Grid.ColumnSpan="2" Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            <Label FontSize="Large" Text="{Binding TodayPaymentLeft}" Grid.Row="1"  Grid.ColumnSpan="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  FontAttributes="Bold" TextColor="Green"/>
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:oxy="clr-namespace:OxyPlot.Xamarin.Forms;assembly=OxyPlot.Xamarin.Forms"
+             x:Class="HomeBudgetMobile.View.Pages.HistoryPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height=".5*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0"  Grid.ColumnSpan="2" Text="Ostatni tydzień" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Large" />
+            <oxy:PlotView Model="{Binding ColumnModel}" Grid.Row="1" Grid.ColumnSpan="2" />
+            <Label Margin="10,0,0,0" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" Text="Dodatkowa pula miesięczna:" />
+            <Label Grid.Row="2" Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="{Binding MonthAdditionalPoll}" />
+            <Label Margin="10,0,0,0" Grid.Row="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" Text="Wydatki w zeszłym miesiącu:" />
+            <Label Grid.Row="3" Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="{Binding LastMonthSpendings}" />
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

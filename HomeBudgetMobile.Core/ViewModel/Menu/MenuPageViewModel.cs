@@ -33,9 +33,10 @@ namespace HomeBudgetMobile.ViewModel.Menu
         public MenuPageViewModel(RootPageViewModel rootPageViewModel)
         {
             this.rootPageVM = rootPageViewModel;
-            ItemSelectedCommand = new HomeBudgetMobile.Helpers.RelayCommand(ItemSelectedMethod);
-            Items.Add(new Helpers.MenuItem("Podsumowanie", Awesome.FontAwesome.FAAnchor));
-            Items.Add(new Helpers.MenuItem("Transakcje", Awesome.FontAwesome.FAAndroid));
+            ItemSelectedCommand = new RelayCommand(ItemSelectedMethod);
+            Items.Add(new Helpers.MenuItem("Podsumowanie", Awesome.FontAwesome.FAPieChart));
+            Items.Add(new Helpers.MenuItem("Transakcje", Awesome.FontAwesome.FACreditCard));
+            Items.Add(new Helpers.MenuItem("Historia", Awesome.FontAwesome.FABarChartO));
         }
 
         private async void ItemSelectedMethod()
@@ -50,6 +51,12 @@ namespace HomeBudgetMobile.ViewModel.Menu
             {
                 var root = App.NavigationPage.Navigation.NavigationStack[0];
                 App.NavigationPage.Navigation.InsertPageBefore(new TransactionPage(), root);
+                await App.NavigationPage.PopToRootAsync(false);
+            }
+            if (SelectedItem == Items[2])
+            {
+                var root = App.NavigationPage.Navigation.NavigationStack[0];
+                App.NavigationPage.Navigation.InsertPageBefore(new HistoryPage(), root);
                 await App.NavigationPage.PopToRootAsync(false);
             }
             rootPageVM.IsPresented = false;

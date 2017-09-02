@@ -399,5 +399,6 @@ namespace Awesome
         public static string FATry = "\uf195";
         public static string FAPlusSquareO = "\uf196";
         public static string FAHistory = "\uf1da";
+        public static string FAPieChart = "\uf200";
     }
 }
