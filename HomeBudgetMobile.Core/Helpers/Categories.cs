@@ -32,5 +32,18 @@ namespace HomeBudgetMobile.Helpers
             }
             return null;
         }
+
+        public static Guid GetCategoryGuid(string catName)
+        {
+            List<Category> categories = new List<Category> { Kosmetyki, Wplata, Ubrania, Lunch, NieplanowaneWydatki, Rozrywka, ZakupyDoDomu };
+            foreach (var cat in categories)
+            {
+                if (cat.CatName.ToUpper().Equals(catName.ToString().ToUpper()))
+                {
+                    return new Guid(cat.CatGuid);
+                }
+            }
+            return Guid.Empty;
+        }
     }
 }

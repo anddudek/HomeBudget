@@ -9,26 +9,26 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <ColumnDefinition Width=".5*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width=".5*" />
+                <RowDefinition Height=".5*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height=".5*" />
             </Grid.RowDefinitions>
 
             <Label Grid.Row="1" Grid.ColumnSpan="2" Text="Dodaj nową transakcję" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Large"/>
-            <Label Grid.Row="2" Text="Podaj kwotę:" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"/>
-            <Editor Grid.Row="3" Grid.ColumnSpan="2" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="{Binding Cost, Mode=TwoWay}" />
-            <Label Grid.Row="4" Text="Wybierz kategorię:" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"/>
-            <Picker Grid.Row="5" Grid.ColumnSpan="2" ItemsSource="{Binding CategoryList}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" Title="Wybierz kategorię" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
-            <Label Grid.Row="6" Text="Opisz transakcję:" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"/>
-            <Editor Grid.Row="7" Grid.ColumnSpan="2" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="{Binding Description, Mode=TwoWay}" />
-            <Button Grid.Row="8" Grid.ColumnSpan="2" Margin="30,30,5,5" Command="{Binding AddTransaction}" Text="Dodaj" />
+            <Label Margin="10,0,0,0" Grid.Row="2" Text="Podaj kwotę:" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"/>
+            <Editor Margin="10,0,10,0" Keyboard="Numeric" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Cost, Mode=TwoWay}" />
+            <Label Margin="10,0,0,0" Grid.Row="4" Text="Wybierz kategorię:" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"/>
+            <Picker Margin="10,0,10,0" Grid.Row="5" Grid.ColumnSpan="2" ItemsSource="{Binding CategoryList}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" Title="Wybierz kategorię" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+            <Label Margin="10,0,0,0" Grid.Row="6" Text="Opisz transakcję:" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"/>
+            <Editor Margin="10,0,10,0" Grid.Row="7" Grid.ColumnSpan="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Text="{Binding Description, Mode=TwoWay}" />
+            <Button Grid.Row="8" Margin="30,0,30,0" Grid.ColumnSpan="2" Command="{Binding AddTransaction}" Text="Dodaj" />
 
         </Grid>
     </ContentPage.Content>

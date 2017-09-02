@@ -78,6 +78,7 @@ namespace HomeBudgetMobile.ViewModel.Pages
             seriesP1.Slices.Add(new PieSlice("", _monthlyLimit) { IsExploded = false, Fill = OxyColors.Transparent });
             seriesP1.Slices.Add(new PieSlice("", todaySum) { IsExploded = false, Fill = OxyColors.Green });
             _donutChart.Series.Add(seriesP1);
+            
         }
     }
 }

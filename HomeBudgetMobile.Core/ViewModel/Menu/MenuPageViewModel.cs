@@ -33,7 +33,7 @@ namespace HomeBudgetMobile.ViewModel.Menu
         public MenuPageViewModel(RootPageViewModel rootPageViewModel)
         {
             this.rootPageVM = rootPageViewModel;
-            ItemSelectedCommand = new RelayCommand(ItemSelectedMethod);
+            ItemSelectedCommand = new HomeBudgetMobile.Helpers.RelayCommand(ItemSelectedMethod);
             Items.Add(new Helpers.MenuItem("Podsumowanie", Awesome.FontAwesome.FAPieChart));
             Items.Add(new Helpers.MenuItem("Transakcje", Awesome.FontAwesome.FACreditCard));
             Items.Add(new Helpers.MenuItem("Historia", Awesome.FontAwesome.FABarChartO));

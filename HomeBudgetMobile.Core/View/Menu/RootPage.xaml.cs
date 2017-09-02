@@ -12,7 +12,7 @@ namespace HomeBudgetMobile.View.Menu
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RootPage : MasterDetailPage
-	{
+	{        
         public RootPageViewModel vm;
 		public RootPage ()
 		{

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using HomeBudgetMobile.Helpers;
+using System.Windows.Input;
+using HomeBudgetMobile.Data;
+using Xamarin.Forms;
 
 namespace HomeBudgetMobile.ViewModel.Pages
 {
@@ -37,21 +39,41 @@ namespace HomeBudgetMobile.ViewModel.Pages
             set { Set(() => SelectedCategory, ref _selectedCategory, value); }
         }
 
-        public GalaSoft.MvvmLight.Command.RelayCommand AddTransaction { get; private set; }
-        private bool CanAddTransaction()
-        {
-            return true;
-        }
+        public ICommand AddTransaction { get; private set; }
         private void AddTransactionAction()
         {
-            Description = "AA";
+           
+            if (SelectedCategory == null)
+            {
+                MessagingCenter.Send<ViewModel.Pages.TransactionPageViewModel> (this, "InvalidCategory");
+                return;
+            }
+            if (Cost <= 0)
+            {
+                MessagingCenter.Send<ViewModel.Pages.TransactionPageViewModel>(this, "InvalidCost");
+                return;
+            }
+            if (!Application.Current.Properties.ContainsKey("CurrentUser"))
+            {
+                MessagingCenter.Send<ViewModel.Pages.TransactionPageViewModel>(this, "InvalidUser");
+                return;
+            }
+            SummaryDataOperator.AddNewTransaction(Cost, Categories.GetCategoryGuid(SelectedCategory).ToString(), Users.GetUserGuid(Application.Current.Properties["CurrentUser"] as string).ToString(), Description);
+            MessagingCenter.Send<ViewModel.Pages.TransactionPageViewModel>(this, "TransactionAdded");
         }
 
         public TransactionPageViewModel()
         {
-            _categoryList = new List<string> { Categories.Kosmetyki.CatName,  Categories.Lunch.CatName, Categories.NieplanowaneWydatki.CatName, Categories.Rozrywka.CatName, Categories.Ubrania.CatName, Categories.Wplata.CatName, Categories.ZakupyDoDomu.CatName};
+            _categoryList = new List<string>();
+            _categoryList.Add(Categories.Kosmetyki.CatName);
+            _categoryList.Add(Categories.Lunch.CatName);
+            _categoryList.Add(Categories.NieplanowaneWydatki.CatName);
+            _categoryList.Add(Categories.Rozrywka.CatName);
+            _categoryList.Add(Categories.Ubrania.CatName);
+            _categoryList.Add(Categories.Wplata.CatName);
+            _categoryList.Add(Categories.ZakupyDoDomu.CatName);
 
-            AddTransaction = new GalaSoft.MvvmLight.Command.RelayCommand(AddTransactionAction, CanAddTransaction);
+            AddTransaction = new Helpers.RelayCommand(AddTransactionAction);
         }
     }
 }

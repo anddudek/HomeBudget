@@ -21,5 +21,18 @@ namespace HomeBudgetMobile.Helpers
             }
             return null;
         }
+
+        public static Guid GetUserGuid(string userName)
+        {
+            List<User> users = new List<User> { Klaudia, Andrzej };
+            foreach (var u in users)
+            {
+                if (u.UName.ToUpper().Equals(userName.ToString().ToUpper()))
+                {
+                    return new Guid(u.UGuid);
+                }
+            }
+            return Guid.Empty;
+        }
     }
 }
