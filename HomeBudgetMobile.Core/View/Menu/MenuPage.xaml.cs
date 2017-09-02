@@ -51,6 +51,14 @@ namespace HomeBudgetMobile.View.Menu
             {
                 DisplayAlert("Sukces", "Wiadomość zmodyfikowana", "OK");
             });
+            MessagingCenter.Subscribe<ViewModel.Pages.LimitPageViewModel>(this, "AmountModified", (sender) =>
+            {
+                DisplayAlert("Sukces", "Kwota do wydania została zmodyfikowana", "OK");
+            });
+            MessagingCenter.Subscribe<ViewModel.Pages.LimitPageViewModel>(this, "LimitUpdated", (sender) =>
+            {
+                DisplayAlert("Sukces", "Limit został zaktualizowany", "OK");
+            });
 
             InitializeComponent ();
             ViewModel.Menu.MenuPageViewModel vm = new ViewModel.Menu.MenuPageViewModel(rootPageVM);

@@ -416,5 +416,81 @@ namespace HomeBudgetMobile.Data
 
             }
         }
+
+        public static void UpdateAmountToSpend(double amount)
+        {
+            string query = "UPDATE Settings SET AmountToSpend = @amount";
+
+            using (SqlConnection con = new SqlConnection(sqlConnectionString))
+            {
+                con.Open();
+
+                using (SqlCommand cmd3 = new SqlCommand(query, con))
+                {
+                    cmd3.Parameters.Add("@amount", System.Data.SqlDbType.Float).Value = amount;
+                    cmd3.ExecuteNonQuery();
+                }
+
+            }
+        }
+
+        public static double UpdateDailyLimit(double amountToSpend)
+        {
+            string queryToSpent = "SELECT SUM(Cost) FROM Transactions WHERE Date >= @dateFrom AND Date <= @dateTo AND CategoryId != 'C041805D-5CEA-4043-B349-554ABB638EA4'";
+            string queryUpdate = "UPDATE Settings SET DailyLimit = @limit, LimitLastTimeSet = @today";
+            double limit = 0;
+            double amount = amountToSpend;
+            DateTime date = DateTime.Today;
+            using (SqlConnection con = new SqlConnection(sqlConnectionString))
+            {
+                con.Open();
+                
+                double amountSpent = 0;
+                int daysLeft = DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month) - DateTime.Today.Day;
+                using (SqlCommand cmd2 = new SqlCommand(queryToSpent, con))
+                {
+                    DateTime dateFrom = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                    DateTime dateTo = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month));
+                    cmd2.Parameters.Add("@dateFrom", System.Data.SqlDbType.DateTime).Value = dateFrom;
+                    cmd2.Parameters.Add("@dateTo", System.Data.SqlDbType.DateTime).Value = dateTo;
+                    try
+                    {
+                        amountSpent = (double)cmd2.ExecuteScalar();
+                    }
+                    catch (System.InvalidCastException)
+                    {
+                        amountSpent = 0;
+                    }
+                }
+                limit = daysLeft == 0 ? amount - amountSpent : (amount - amountSpent) / daysLeft;
+                limit = limit <= 0 ? 0 : limit;
+                limit = Math.Round(limit, 2);
+                using (SqlCommand cmd3 = new SqlCommand(queryUpdate, con))
+                {
+                    cmd3.Parameters.Add("@limit", System.Data.SqlDbType.Float).Value = limit;
+                    cmd3.Parameters.Add("@today", System.Data.SqlDbType.DateTime).Value = DateTime.Today.Date;
+                    cmd3.ExecuteNonQuery();
+                }
+                
+            }
+            return limit;
+        }
+
+        public static double GetAmountToSpend()
+        {
+            string query = "Select AmountToSpend From Settings";
+            double result = 0;
+
+            using (SqlConnection con = new SqlConnection(sqlConnectionString))
+            {
+                con.Open();
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    result = (double)cmd.ExecuteScalar();
+                }
+            }
+            return result;
+        }
     }
 }

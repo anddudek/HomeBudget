@@ -51,6 +51,7 @@ namespace HomeBudgetMobile.ViewModel.Pages
                 series.Items.Add(new ColumnItem(sumArray[i]));
             }
             MyLinearAxis XAxis = new MyLinearAxis();
+            XAxis.Angle = 45;
             XAxis.Position = OxyPlot.Axes.AxisPosition.Bottom;
             _columnModel.Axes.Add(XAxis);
         }

@@ -42,7 +42,7 @@
             </ListView>
             <Label FontSize="Medium" Text="Suma:" Grid.Row="4"  Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"  />
             <Label FontSize="Medium" Text="{Binding TodayPaymentSum}" Grid.Row="4"  Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-            <Label FontSize="Medium" Text="Dodatkowa pula miesięczna:" Grid.Row="5"  Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"  />
+            <Label FontSize="Medium" Text="Dodatkowa pula:" Grid.Row="5"  Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"  />
             <Label FontSize="Medium" Text="{Binding MonthsPollLeft}" Grid.Row="5"  Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
             <Label FontSize="Large" Text="Pozostało dziś:" Grid.Row="6"  Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" FontAttributes="Bold" />
             <Label FontSize="Large" Text="{Binding TodayPaymentLeft}" Grid.Row="6"  Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  FontAttributes="Bold" TextColor="Green"/>

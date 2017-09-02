@@ -28,6 +28,9 @@
     <Compile Update="View\Pages\LastPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\Pages\LimitPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\Pages\LoginPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -41,6 +41,7 @@ namespace HomeBudgetMobile.ViewModel.Menu
             Items.Add(new Helpers.MenuItem("Historia", Awesome.FontAwesome.FABarChartO, Color.Black));
             Items.Add(new Helpers.MenuItem("Logowanie", Awesome.FontAwesome.FAUser, Color.Black));
             Items.Add(new Helpers.MenuItem("Ostatnie", Awesome.FontAwesome.FAHistory, Color.Black));
+            Items.Add(new Helpers.MenuItem("Limity", Awesome.FontAwesome.FAExclamationCircle, Color.Black));
             Items.Add(new Helpers.MenuItem("Wiadomość", Awesome.FontAwesome.FAComment, Color.Black));
 
             Timer timer = new Timer(5000);
@@ -96,6 +97,12 @@ namespace HomeBudgetMobile.ViewModel.Menu
                 await App.NavigationPage.PopToRootAsync(false);
             }
             if (SelectedItem == Items[5])
+            {
+                var root = App.NavigationPage.Navigation.NavigationStack[0];
+                App.NavigationPage.Navigation.InsertPageBefore(new LimitPage(), root);
+                await App.NavigationPage.PopToRootAsync(false);
+            }
+            if (SelectedItem == Items[6])
             {
                 var root = App.NavigationPage.Navigation.NavigationStack[0];
                 App.NavigationPage.Navigation.InsertPageBefore(new MessagePage(), root);
