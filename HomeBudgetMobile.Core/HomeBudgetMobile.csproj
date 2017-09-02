@@ -25,6 +25,15 @@
     <Compile Update="View\Pages\HistoryPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\Pages\LastPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Pages\LoginPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Pages\MessagePage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\Pages\SummaryPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

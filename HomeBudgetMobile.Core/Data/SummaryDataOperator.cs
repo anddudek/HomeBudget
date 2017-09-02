@@ -268,7 +268,7 @@ namespace HomeBudgetMobile.Data
                         while (reader.Read())
                         {
                             var tr = new TransactionRecord();
-                            tr.Date = reader.GetDateTime(0);
+                            tr.Date = (reader.GetDateTime(0)).Date;
                             tr.Cost = reader.GetDouble(1);
                             tr.Name = Users.GetUserName(reader.GetGuid(2));
                             tr.Category = Categories.GetCategoryName(reader.GetGuid(3));
@@ -295,15 +295,12 @@ namespace HomeBudgetMobile.Data
             using (SqlConnection con = new SqlConnection(sqlConnectionString))
             {
                 con.Open();
-
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                
+                using (SqlCommand cmd3 = new SqlCommand(query, con))
                 {
-                    using (SqlCommand cmd3 = new SqlCommand(query, con))
-                    {
-                        cmd3.Parameters.Add("@limit", System.Data.SqlDbType.Float).Value = newAmount;
-                        cmd3.ExecuteNonQuery();
-                    }
-                }
+                    cmd3.Parameters.Add("@limit", System.Data.SqlDbType.Float).Value = newAmount;
+                    cmd3.ExecuteNonQuery();
+                }                
             }
         }
 
@@ -333,6 +330,91 @@ namespace HomeBudgetMobile.Data
                 }
             }
             return lastMonthSpendings;
+        }
+
+        public static string[] GetLoginInformations(string login)
+        {
+            string query = "Select Password, Hash from dbo.users where Login = @login";
+            string[] returnArr = new string[2];
+
+            using (SqlConnection con = new SqlConnection(sqlConnectionString))
+            {
+                con.Open();
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.Add("@login", System.Data.SqlDbType.VarChar).Value = login;
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            returnArr[0] = reader.GetString(0);
+                            returnArr[1] = reader.GetString(1);
+                        }
+                    }
+                }
+            }
+            return returnArr;
+        }
+
+        public static bool HasUserSeenMessage(string login)
+        {
+            string query = "Select HasSeenMessage from dbo.users where Login = @login";
+            bool hasSeen = true;
+
+            using (SqlConnection con = new SqlConnection(sqlConnectionString))
+            {
+                con.Open();
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.Add("@login", System.Data.SqlDbType.VarChar).Value = login;
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            hasSeen = reader.GetBoolean(0);
+                        }
+                    }
+                }
+            }
+            return hasSeen;
+        }
+
+        public static void MarkMessageAsRead(string login)
+        {
+            string query = "UPDATE Users SET HasSeenMessage = 1 Where Login = @login";
+
+            using (SqlConnection con = new SqlConnection(sqlConnectionString))
+            {
+                con.Open();
+                
+                using (SqlCommand cmd3 = new SqlCommand(query, con))
+                {
+                    cmd3.Parameters.Add("@login", System.Data.SqlDbType.VarChar).Value = login;
+                    cmd3.ExecuteNonQuery();
+                }
+                
+            }
+        }
+
+        public static void UpdateMessage(string login, string message)
+        {
+            string query = "UPDATE Settings SET Message = @message, MessageCreatorId = @userId UPDATE Users Set HasSeenMessage = 0 Where Login != @login";
+            
+            using (SqlConnection con = new SqlConnection(sqlConnectionString))
+            {
+                con.Open();
+
+                using (SqlCommand cmd3 = new SqlCommand(query, con))
+                {
+                    cmd3.Parameters.Add("@message", System.Data.SqlDbType.VarChar).Value = message;
+                    cmd3.Parameters.Add("userId", System.Data.SqlDbType.UniqueIdentifier).Value = Users.GetUserGuid(login);
+                    cmd3.Parameters.Add("@login", System.Data.SqlDbType.VarChar).Value = login;
+                    cmd3.ExecuteNonQuery();
+                }
+
+            }
         }
     }
 }

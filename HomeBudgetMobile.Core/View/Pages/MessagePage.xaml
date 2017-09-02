@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HomeBudgetMobile.View.Pages.MessagePage">
+    <ContentPage.Content>
+        <Grid Margin="10,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="6*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label Text="Wiadomość" Grid.ColumnSpan="2" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+            <Editor Text="{Binding Message}" Grid.Row="1" Grid.ColumnSpan="2" />
+            <Button Text="Wyślij" Command="{Binding UpdateMessage}" Grid.Row="2" Grid.Column="1" />
+            <Label Text="Ostatnia edycja:" Grid.Row="3" FontSize="Large" />
+            <Label Text="{Binding MessageCreator}" Grid.Row="3" Grid.Column="1" FontSize="Large" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

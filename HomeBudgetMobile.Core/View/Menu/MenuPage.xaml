@@ -17,8 +17,8 @@
                                 <ColumnDefinition Width="3*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Text="{Binding Icon}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                            <Label Grid.Column="1" Text="{Binding Title}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                            <Label Grid.Column="0" Text="{Binding Icon}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Large" TextColor="{Binding IconColor}"/>
+                            <Label Grid.Column="1" Text="{Binding Title}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Large" />
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

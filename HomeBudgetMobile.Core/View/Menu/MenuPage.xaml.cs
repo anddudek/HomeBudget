@@ -29,10 +29,28 @@ namespace HomeBudgetMobile.View.Menu
             });
             MessagingCenter.Subscribe<ViewModel.Pages.TransactionPageViewModel>(this, "TransactionAdded", (sender) =>
             {
-                DisplayAlert("", "Transakcja dodana", "OK");
+                DisplayAlert("Sukces", "Transakcja dodana", "OK");
             });
-
-            Application.Current.Properties["CurrentUser"] = "Andrzej";
+            MessagingCenter.Subscribe<ViewModel.Pages.LoginPageViewModel>(this, "LoggedOut", (sender) =>
+            {
+                DisplayAlert("Sukces", "Wylogowano", "OK");
+            });
+            MessagingCenter.Subscribe<ViewModel.Pages.LoginPageViewModel>(this, "LoggedIn", (sender) =>
+            {
+                DisplayAlert("Sukces", "Zalogowano", "OK");
+            });
+            MessagingCenter.Subscribe<ViewModel.Pages.LoginPageViewModel>(this, "LoggingError", (sender) =>
+            {
+                DisplayAlert("Błąd", "Błędny login lub hasło", "OK");
+            });
+            MessagingCenter.Subscribe<ViewModel.Pages.MessagePageViewModel>(this, "NotLogged", (sender) =>
+            {
+                DisplayAlert("Błąd", "Aby zmienić wiadomość musisz się zalogować", "OK");
+            });
+            MessagingCenter.Subscribe<ViewModel.Pages.MessagePageViewModel>(this, "MessageChanged", (sender) =>
+            {
+                DisplayAlert("Sukces", "Wiadomość zmodyfikowana", "OK");
+            });
 
             InitializeComponent ();
             ViewModel.Menu.MenuPageViewModel vm = new ViewModel.Menu.MenuPageViewModel(rootPageVM);

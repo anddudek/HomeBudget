@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HomeBudgetMobile.View.Pages.LastPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="8*" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="Ostatnie transakcje" HorizontalTextAlignment="Center" FontSize="Large" />            
+            <ListView ItemsSource="{Binding TransactionList}" Grid.Row="1" BackgroundColor="Transparent" HasUnevenRows="False" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label FontSize="Small" Grid.Column="0" Text="{Binding Path=Date, StringFormat='{0:dd/MM/yyyy}'}" HorizontalTextAlignment="Start" />
+                                    <Label FontSize="Small" Grid.Column="1" Text="{Binding Path=Cost}" HorizontalTextAlignment="Start" />
+                                    <Label FontSize="Small" Grid.Column="2" Text="{Binding Path=Name}" HorizontalTextAlignment="Start" />
+                                    <Label FontSize="Small" Grid.Column="3" Text="{Binding Path=Category}" HorizontalTextAlignment="Start" />
+                                    <Label FontSize="Small" Grid.Column="4" Text="{Binding Path=Description}" HorizontalTextAlignment="Center" />
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
